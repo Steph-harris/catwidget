@@ -89,6 +89,9 @@ body {
   background-color: #e0e0e07a;
   padding-bottom: 2px;
 }
+.item-name p {
+  margin: 0;
+}
 .item-image {
   background-color: #e0e0e07a;
 }
