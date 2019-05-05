@@ -21,7 +21,6 @@ STYLES = ('bulletin', 'tabs')
 
 
 @app.route("/")
-@cache.cached(timeout=3600)
 def index():
     token_response = requests.post(
         'https://api.petfinder.com/v2/oauth2/token',
