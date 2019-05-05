@@ -34,3 +34,8 @@ def index():
         headers={'Authorization': f'Bearer {token}'})
     animals = response.json()['animals']
     return render_template('index.html', animals=animals)
+
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
