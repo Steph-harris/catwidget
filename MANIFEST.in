@@ -1,0 +1,5 @@
+graft static
+graft templates
+include *.py
+include README.md
+include requirements.txt

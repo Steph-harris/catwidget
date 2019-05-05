@@ -1,0 +1,97 @@
+body {
+  font-family: sans-serif;
+  font-size: 15px;
+  line-height: 20px;
+}
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.item {
+  text-align: center;
+  width: 200px;
+  border: 3px solid #e0e0e0;
+  border-radius: 18px;
+  margin: 5px;
+  height: 470px;
+  background-color: #e0e0e000;
+}
+.item-image {
+  border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+.item-desc p {
+  margin: 0;
+}
+.icon {
+  height: 20px;
+  width: 25px;
+  object-fit: contain;
+}
+.item-image img {
+  width: 200px;
+  height: 250px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  opacity: 1;
+  filter: alpha(opacity=100); /* IE8 and lower */
+  zoom: 1; /* Triggers "hasLayout" in IE 7 and lower */
+  max-height: 250px;
+  object-fit: cover;
+}
+.item-contents:hover .item-image,
+.item-contents:hover .item-name,
+.item-contents:hover .item-desc,
+.item-contents:hover .item-likes {
+  opacity: 0.7;
+  filter: alpha(opacity=80);
+  zoom: 1;
+}
+.item-contents:hover:after {
+  text-align: center;
+}
+.item-contents{
+  position:relative;
+  width: 200px;
+  height: 120px;
+  margin: 0 auto;
+}
+.btn{
+  position: absolute;
+  z-index: 2;
+  top: 200px;
+  display: none;
+  left: 59px;
+  color: white;
+  font-size: 25px;
+  border: 1px solid #52bad1;
+  border-radius: 10px;
+  padding: 10px;
+  left: 31px;
+  background-color: #52bad1;
+}
+.item-contents:hover .btn{
+  display:block;
+}
+.container a {
+  text-decoration: none;
+  color: black;
+}
+.item-descriptors {
+  padding: 5% 4px;
+  max-height: 200px;
+}
+.item-desc-attrs {
+  padding: 5%;
+}
+.item-name {
+  background-color: #e0e0e07a;
+  padding-bottom: 2px;
+}
+.item-image {
+  background-color: #e0e0e07a;
+}
+.btn:hover {
+  background-color: rgba(82,186,209,.8);
+}

@@ -1,0 +1,4 @@
+flask
+Flask-Caching
+Jinja2
+requests

@@ -1,0 +1,53 @@
+<!doctype html>
+<title>Stray Cat Blues</title>
+<head>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='favicon.ico') }}">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.ico') }}" sizes="32x32">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.ico') }}" sizes="16x16">
+  <link rel="mask-icon" href="{{ url_for('static', filename='favicon.ico') }}" color="#5bbad5">
+  <meta name="theme-color" content="#ffffff">
+</head>
+  <body>
+    <div class="container">
+      {% for cat in animals %}
+        {% if cat['status'] == 'adoptable' %}
+          <div class="item">
+            <a href="{{ cat['url'] }}">
+              <div class="item-contents">
+                <div class="item-image">
+                  <img src="{{ cat['photos'][0]['medium'] }}">
+                </div>
+                <div class="item-name">
+                  <b>{{ cat['name'].split(' -Adoption Pending!')[0] }}</b>
+                </div>
+                <div class="item-descriptors">
+                  <div class="item-desc"><p>{{ cat['description'] }}</p></div>
+                    <div class="item-desc-attrs">
+                      <div class="item-desc"><b>Gender: </b>{{ cat['gender'] }}</div>
+                      <div class="item-likes">
+                        {% if cat['environment']['cats'] or cat['environment']['dogs'] or cat['environment']['children'] %}
+                          <b>Likes:</b>
+                        {% endif %}
+                        {% if cat['environment']['cats'] %}
+                          <img class="icon" src="{{ url_for('static', filename='cat-solid.svg') }}">
+                        {% endif %}
+                        {% if cat['environment']['dogs'] %}
+                          <img class="icon" src="{{ url_for('static', filename='dog-solid.svg') }}">
+                        {% endif %}
+                        {% if cat['environment']['children'] %}
+                          <img class="icon" src="{{ url_for('static', filename='child-solid.svg') }}">
+                        {% endif %}
+                        </div>
+                    </div>
+                    <div class="item-button">
+                      <div class="btn">Adopt Me!</div>
+                    </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </body>
