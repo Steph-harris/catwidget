@@ -13,7 +13,7 @@
       {% for cat in animals %}
         {% if cat['status'] == 'adoptable' %}
           <div class="item">
-            <a href="{{ cat['url'] }}">
+            <a href="{{ cat['url'] }}" target="_blank">
               <div class="item-contents">
                 <div class="item-image">
                   <img src="{{ cat['photos'][0]['medium'] }}">
