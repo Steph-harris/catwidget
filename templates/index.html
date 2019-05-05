@@ -1,7 +1,7 @@
 <!doctype html>
 <title>Stray Cat Blues</title>
 <head>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename=style) }}">
   <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='favicon.ico') }}">
   <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.ico') }}" sizes="32x32">
   <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.ico') }}" sizes="16x16">
@@ -19,7 +19,7 @@
                   <img src="{{ cat['photos'][0]['medium'] }}">
                 </div>
                 <div class="item-name">
-                  <b>{{ cat['name'].split(' -Adoption Pending!')[0] }}</b>
+                  <b><p>{{ cat['name'].split(' -')[0] }}</p></b>
                 </div>
                 <div class="item-descriptors">
                   <div class="item-desc"><p>{{ cat['description'] }}</p></div>

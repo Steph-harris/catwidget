@@ -3,6 +3,7 @@ import os
 from flask_caching import Cache
 from flask import Flask
 from flask import render_template
+from flask import request
 import requests
 
 
@@ -16,6 +17,7 @@ cache = Cache(app)
 
 CLIENT_ID = os.environ['CLIENT_ID']
 CLIENT_SECRET = os.environ['CLIENT_SECRET']
+STYLES = ('bulletin', 'tabs')
 
 
 @app.route("/")
@@ -33,7 +35,11 @@ def index():
         '?organization=PA16&status=adoptable',
         headers={'Authorization': f'Bearer {token}'})
     animals = response.json()['animals']
-    return render_template('index.html', animals=animals)
+
+    style = request.args.get('style', '')
+    if style in STYLES:
+        return render_template('index.html', animals=animals, style=f'{style}.css')
+    return render_template('index.html', animals=animals, style='bulletin.css')
 
 
 if __name__ == "__main__":
