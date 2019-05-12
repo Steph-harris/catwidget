@@ -1,53 +1,68 @@
 <!doctype html>
 <title>Stray Cat Blues</title>
 <head>
-  <link rel="stylesheet" href="{{ url_for('static', filename=style) }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
   <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='favicon.ico') }}">
   <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.ico') }}" sizes="32x32">
   <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.ico') }}" sizes="16x16">
   <link rel="mask-icon" href="{{ url_for('static', filename='favicon.ico') }}" color="#5bbad5">
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
   <meta name="theme-color" content="#ffffff">
 </head>
   <body>
     <div class="container">
-      {% for cat in animals %}
-        {% if cat['status'] == 'adoptable' %}
-          <div class="item">
-            <a href="{{ cat['url'] }}" target="_blank">
-              <div class="item-contents">
-                <div class="item-image">
-                  <img src="{{ cat['photos'][0]['medium'] }}">
-                </div>
-                <div class="item-name">
-                  <b><p>{{ cat['name'].split(' -')[0] }}</p></b>
-                </div>
-                <div class="item-descriptors">
-                  <div class="item-desc"><p>{{ cat['description'] }}</p></div>
-                    <div class="item-desc-attrs">
-                      <div class="item-desc"><b>Gender: </b>{{ cat['gender'] }}</div>
-                      <div class="item-likes">
-                        {% if cat['environment']['cats'] or cat['environment']['dogs'] or cat['environment']['children'] %}
-                          <b>Likes:</b>
-                        {% endif %}
-                        {% if cat['environment']['cats'] %}
-                          <img class="icon" src="{{ url_for('static', filename='cat-solid.svg') }}">
-                        {% endif %}
-                        {% if cat['environment']['dogs'] %}
-                          <img class="icon" src="{{ url_for('static', filename='dog-solid.svg') }}">
-                        {% endif %}
-                        {% if cat['environment']['children'] %}
-                          <img class="icon" src="{{ url_for('static', filename='child-solid.svg') }}">
-                        {% endif %}
+      {% if fallback %}
+        <a href="https://www.petfinder.com/search/cats-for-adoption/?shelter_id%5B0%5D=PA16&sort%5B0%5D=recently_added" target="_parent">
+          <div class="btn small-button-style-raised sqs-block-button sqs-block-button-element--small">View all Adoptable Kitties</div>
+        </a>
+      {% else %}
+          {%  if prev_link %}
+            <a href="{{ prev_link }}"><div class="next-btn">Prev</div></a>
+          {% endif %}
+          {% for cat in animals %}
+            {% if cat['status'] == 'adoptable' %}
+              <div class="item">
+                  <div class="item-contents">
+                    <div class="item-image">
+                      <img src="{{ cat['photos'][0]['medium'] }}">
+                    </div>
+                    <div class="item-content-container">
+                        <div class="item-name">
+                          <b><p>{{ cat['name'].split(' -')[0] | safe}}</p></b>
                         </div>
-                    </div>
-                    <div class="item-button">
-                      <div class="btn">Adopt Me!</div>
-                    </div>
-                </div>
+                        <div class="item-descriptors">
+                          <div class="item-desc"><p>{{ cat['description'] }}</p></div>
+                            <div class="item-desc-attrs">
+                              <div class="item-desc"><b>Gender: </b>{{ cat['gender'] }}</div>
+                              <div class="item-likes">
+                                {% if cat['environment']['cats'] or cat['environment']['dogs'] or cat['environment']['children'] %}
+                                  <b>Likes:</b>
+                                {% endif %}
+                                {% if cat['environment']['cats'] %}
+                                  <img class="icon" src="{{ url_for('static', filename='cat-solid.svg') }}">
+                                {% endif %}
+                                {% if cat['environment']['dogs'] %}
+                                  <img class="icon" src="{{ url_for('static', filename='dog-solid.svg') }}">
+                                {% endif %}
+                                {% if cat['environment']['children'] %}
+                                  <img class="icon" src="{{ url_for('static', filename='child-solid.svg') }}">
+                                {% endif %}
+                                </div>
+                            </div>
+                            <div class="item-button">
+                              <a href="{{ cat['url'] }}" target="_blank">
+                                <div class="btn small-button-style-raised sqs-block-button sqs-block-button-element--small">Adopt Me!</div>
+                              </a>
+                            </div>
+                        </div>
+                      </div>
+                  </div>
               </div>
-            </a>
-          </div>
-        {% endif %}
-      {% endfor %}
+            {% endif %}
+          {% endfor %}
+          {%  if next_link %}
+            <a href="{{ next_link }}"><div class="next-btn">Next</div></a>
+          {% endif %}
+      {% endif %}
     </div>
   </body>
