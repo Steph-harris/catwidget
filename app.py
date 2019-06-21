@@ -13,7 +13,8 @@ app = Flask(__name__)
 app.config.from_mapping({
     "DEBUG": False,
     "CACHE_TYPE": "simple",
-    "CACHE_DEFAULT_TIMEOUT": 300
+    "CACHE_DEFAULT_TIMEOUT": 300,
+    "PREFERRED_URL_SCHEME": "https"
 })
 CORS(app, resources={r"/": {"origins": "*"}})
 SERVER_NAME = os.environ.get('SERVER_ NAME', 'localhost')
