@@ -62,8 +62,10 @@ def index():
     prv = pagination.get('previous', {}).get('href', '')
     nxt = pagination.get('next', {}).get('href', '')
 
-    prev_link = url_for('index', page=prv, _external=True) if prv else None
-    next_link = url_for('index', page=nxt, _external=True) if nxt else None
+    prev_link = url_for(
+        'index', page=prv, _external=True, _scheme='https') if prv else None
+    next_link = url_for(
+        'index', page=nxt, _external=True, _scheme='https') if nxt else None
     app.logger.warning('p:%s n:%s', prev_link, next_link)
 
     return render_template('index.html',
