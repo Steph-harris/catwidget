@@ -8,6 +8,175 @@
           })
     }
     </script>
+    <style>
+        body {
+          font-family: sans-serif;
+          font-family: Ubuntu;
+          font-size: 15px;
+          line-height: 20px;
+          position: absolute;
+        }
+        .container {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+        .item {
+          text-align: center;
+          width: 200px;
+          margin: 15px 3% 20px 3%;
+        }
+        .item-image {
+        }
+        .item-desc p {
+          margin: 0;
+        }
+        .icon {
+          height: 20px;
+          width: 25px;
+          object-fit: contain;
+        }
+        .item-content-container {
+
+        }
+        .item-image img {
+          width: 200px;
+          opacity: 1;
+          filter: alpha(opacity=100); /* IE8 and lower */
+          zoom: 1; /* Triggers "hasLayout" in IE 7 and lower */
+          max-height: 250px;
+          object-fit: cover;
+          height: 250px;
+        }
+        .item-contents{
+          position:relative;
+          width: 200px;
+          margin: 0 auto;
+        }
+        .btn{
+          color: white;
+          font-size: 25px;
+          padding: 10px;
+          background-color: #52bad1;
+          font-size: 17.5px;
+          font-weight: 500;
+          font-style: normal;
+          text-transform: none;
+          letter-spacing: 0em;
+          color: #eef7ef;
+          background-color: #52bad1;
+          border-color: #52bad1;
+          border-radius: 300px;
+          -webkit-box-shadow: 0 2px 0 0 #34abc5;
+          -moz-box-shadow: 0 2px 0 0 #34abc5;
+          box-shadow: 0 2px 0 0 #34abc5;
+        }
+        .small-button-style-raised .sqs-block-button .sqs-block-button-element--small,
+        .medium-button-style-raised .sqs-block-button .sqs-block-button-element--medium,
+        .large-button-style-raised .sqs-block-button .sqs-block-button-element--large {
+            position: relative;
+            -webkit-transition: .1s background-color linear;
+            -moz-transition: .1s background-color linear;
+            -o-transition: .1s background-color linear;
+            transition: .1s background-color linear
+        }
+        .small-button-style-raised .sqs-block-button .sqs-block-button-element--small:active,
+        .medium-button-style-raised .sqs-block-button .sqs-block-button-element--medium:active,
+        .large-button-style-raised .sqs-block-button .sqs-block-button-element--large:active {
+            top: 1px
+        }
+        .small-button-style-raised .sqs-block-button .sqs-block-button-element--small {
+          -webkit-box-shadow: 0 2px 0 0 #34abc5;
+          -moz-box-shadow: 0 2px 0 0 #34abc5;
+          box-shadow: 0 2px 0 0 #34abc5
+        }
+        .small-button-style-raised .sqs-block-button .sqs-block-button-element--small:hover {
+          background-color: #5ebed4
+        }
+        .small-button-style-raised .sqs-block-button .sqs-block-button-element--small:active {
+          -webkit-box-shadow: 0 1px 0 0 #34abc5;
+          -moz-box-shadow: 0 1px 0 0 #34abc5;
+          box-shadow: 0 1px 0 0 #34abc5
+        }
+        .small-button-style-raised .sqs-alternate-block-style-container .sqs-block-button .sqs-block-button-element--small {
+          -webkit-box-shadow: 0 2px 0 0 #ebebeb;
+          -moz-box-shadow: 0 2px 0 0 #ebebeb;
+          box-shadow: 0 2px 0 0 #ebebeb
+        }
+        .small-button-style-raised .sqs-alternate-block-style-container .sqs-block-button .sqs-block-button-element--small:hover {
+          background-color: #fff
+        }
+        .small-button-style-raised .sqs-alternate-block-style-container .sqs-block-button .sqs-block-button-element--small:active {
+          -webkit-box-shadow: 0 1px 0 0 #ebebeb;
+          -moz-box-shadow: 0 1px 0 0 #ebebeb;
+          box-shadow: 0 1px 0 0 #ebebeb
+        }
+        .small-button-shape-rounded .sqs-block-button .sqs-block-button-element--small,
+        .medium-button-shape-rounded .sqs-block-button .sqs-block-button-element--medium,
+        .large-button-shape-rounded .sqs-block-button .sqs-block-button-element--large {
+          border-radius: 3px
+        }
+        .small-button-shape-pill .sqs-block-button .sqs-block-button-element--small,
+        .medium-button-shape-pill .sqs-block-button .sqs-block-button-element--medium,
+        .large-button-shape-pill .sqs-block-button .sqs-block-button-element--large {
+          border-radius: 300px
+        }
+        .btn:hover {
+          background-color: #5ebed4;
+        }
+        .next-btn {
+          background-color: transparent;
+          -webkit-transition: background-color 170ms ease-out,color 170ms ease-out;
+          -moz-transition: background-color 170ms ease-out,color 170ms ease-out;
+          -ms-transition: background-color 170ms ease-out,color 170ms ease-out;
+          -o-transition: background-color 170ms ease-out,color 170ms ease-out;
+          transition: background-color 170ms ease-out,color 170ms ease-out;
+          box-shadow: none;
+          border: 2px solid #52bad1;
+          color: #52bad1;
+          border-radius: 300px;
+          vertical-align: middle;
+          padding: 12px 18px;
+          margin: .618em .51em;
+        }
+        .next-btn:hover {
+          background-color: #52bad1;
+          color: #fff;
+        }
+        .container a {
+          text-decoration: none;
+          color: black;
+        }
+        .item-descriptors {
+          padding: 5% 4px;
+        }
+        .item-desc-attrs {
+          padding: 5%;
+        }
+        .item-name {
+          padding-bottom: 2px;
+          padding-top: 5px;
+        }
+        .item-name p {
+          margin: 0;
+        }
+        .item-image {
+        }
+
+        @media all and (max-width: 500px) {
+          .item {
+            text-align: center;
+            width: 44%;
+          }
+          .item-image img {
+            width: 100%;
+          }
+          .item-contents{
+            width: 100%;
+            margin: 0 0 0 0;
+          }
+        }
+    </style>
     <div class="container">
       {% if fallback %}
         <a href="https://www.petfinder.com/search/cats-for-adoption/?shelter_id%5B0%5D=PA16&sort%5B0%5D=recently_added" target="_parent">
