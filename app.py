@@ -58,11 +58,13 @@ def index():
                for k, v in item.items()}
                for item in body['animals']]
     pagination = body.get('pagination', {}).get('_links', {})
-    prev = pagination.get('previous', {}).get('href', '')
-    next_ = pagination.get('next', {}).get('href', '')
+    prv = pagination.get('previous', {}).get('href', '')
+    nxt = pagination.get('next', {}).get('href', '')
 
-    prev_link = url_for('index', page=prev) if prev else None
-    next_link = url_for('index', page=next_) if next_ else None
+    prev_link = url_for('index', page=prv, _external=True) if prv else None
+    next_link = url_for('index', page=nxt, _external=True) if nxt else None
+    app.logger.warning('p:%s n:%s', prev_link, next_link)
+
     return render_template('index.html',
                            animals=animals,
                            next_link=next_link,

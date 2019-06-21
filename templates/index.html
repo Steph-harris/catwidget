@@ -1,11 +1,11 @@
 <!doctype html>
 <title>Stray Cat Blues</title>
 <head>
-  <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
-  <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='favicon.ico') }}">
-  <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.ico') }}" sizes="32x32">
-  <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.ico') }}" sizes="16x16">
-  <link rel="mask-icon" href="{{ url_for('static', filename='favicon.ico') }}" color="#5bbad5">
+  <link rel="stylesheet" href="{{ url_for('static', filename='main.css', _external=True) }}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='favicon.ico', _external=True) }}">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.ico', _external=True) }}" sizes="32x32">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.ico', _external=True) }}" sizes="16x16">
+  <link rel="mask-icon" href="{{ url_for('static', filename='favicon.ico', _external=True) }}" color="#5bbad5">
   <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
   <meta name="theme-color" content="#ffffff">
 </head>
@@ -39,13 +39,13 @@
                                   <b>Likes:</b>
                                 {% endif %}
                                 {% if cat['environment']['cats'] %}
-                                  <img class="icon" src="{{ url_for('static', filename='cat-solid.svg') }}">
+                                  <img class="icon" src="{{ url_for('static', filename='cat-solid.svg', _external=True) }}">
                                 {% endif %}
                                 {% if cat['environment']['dogs'] %}
-                                  <img class="icon" src="{{ url_for('static', filename='dog-solid.svg') }}">
+                                  <img class="icon" src="{{ url_for('static', filename='dog-solid.svg', _external=True) }}">
                                 {% endif %}
                                 {% if cat['environment']['children'] %}
-                                  <img class="icon" src="{{ url_for('static', filename='child-solid.svg') }}">
+                                  <img class="icon" src="{{ url_for('static', filename='child-solid.svg', _external=True) }}">
                                 {% endif %}
                                 </div>
                             </div>
