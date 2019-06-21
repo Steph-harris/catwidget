@@ -1,11 +1,11 @@
 <!doctype html>
 <title>Stray Cat Blues</title>
 <head>
-  <link rel="stylesheet" href="{{ url_for('static', filename='main.css', _external=True) }}">
-  <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='favicon.ico', _external=True) }}">
-  <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.ico', _external=True) }}" sizes="32x32">
-  <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.ico', _external=True) }}" sizes="16x16">
-  <link rel="mask-icon" href="{{ url_for('static', filename='favicon.ico', _external=True) }}" color="#5bbad5">
+  <link rel="stylesheet" href="{{ url_for('static', filename='main.css', _external=True, _scheme='https') }}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='favicon.ico', _external=True, _scheme='https') }}">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.ico', _external=True, _scheme='https') }}" sizes="32x32">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.ico', _external=True, _scheme='https') }}" sizes="16x16">
+  <link rel="mask-icon" href="{{ url_for('static', filename='favicon.ico', _external=True, _scheme='https') }}" color="#5bbad5">
   <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
   <meta name="theme-color" content="#ffffff">
 </head>
