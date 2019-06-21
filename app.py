@@ -66,13 +66,15 @@ def index():
         'index', page=prv, _external=True, _scheme='https') if prv else None
     next_link = url_for(
         'index', page=nxt, _external=True, _scheme='https') if nxt else None
-    app.logger.warning('p:%s n:%s', prev_link, next_link)
+    embed = request.args.get('embed')
 
-    if request.args.get('embed'):
+    if embed:
+        nxt_link = yarl.URL(next_link).update_query(embed)
+        prv_link = yarl.URL(prev_link).update_query(embed)
         return render_template('embed.html',
                                animals=animals,
-                               next_link=next_link,
-                               prev_link=prev_link)
+                               next_link=nxt_link,
+                               prev_link=prv_link)
 
     return render_template('index.html',
                            animals=animals,
