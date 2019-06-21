@@ -1,5 +1,6 @@
 flask
 Flask-Caching
+flask-cors
 Jinja2
 requests
 yarl

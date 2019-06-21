@@ -3,6 +3,7 @@ import os
 from html import unescape
 from flask_caching import Cache
 from flask import Flask
+from flask_cors import CORS
 from flask import render_template, request, url_for
 import requests
 import yarl
@@ -14,6 +15,8 @@ app.config.from_mapping({
     "CACHE_TYPE": "simple",
     "CACHE_DEFAULT_TIMEOUT": 300
 })
+CORS(app, resources={r"/": {"origins": "*"}})
+SERVER_NAME = os.environ.get('SERVER_ NAME', 'localhost')
 cache = Cache(app)
 
 BASE_URL = yarl.URL(
