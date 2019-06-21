@@ -174,7 +174,8 @@
     </a>
   {% else %}
       {%  if prev_link %}
-        <a onclick="reloadAvailableCats('{{ prev_link }}')"><div id="available-cats-prev" class="next-btn">Prev</div></a>
+        <a onclick="fetch('{{ prev_link }}').then(function(response) {
+        return response.text();}).then(function(myText){document.getElementById('available-cats').innerHTML = myText;})"><div id="available-cats-prev" class="next-btn">Prev</div></a>
       {% endif %}
       {% for cat in animals %}
         {% if cat['status'] == 'adoptable' %}
@@ -218,7 +219,8 @@
         {% endif %}
       {% endfor %}
       {%  if next_link %}
-        <a onclick="{{ next_link }}"><div id="available-cats-next" class="next-btn">Next</div></a>
+        <a onclick="fetch('{{ next_link }}').then(function(response) {
+        return response.text();}).then(function(myText){document.getElementById('available-cats').innerHTML = myText;})"><div id="available-cats-next" class="next-btn">Next</div></a>
       {% endif %}
   {% endif %}
 </div>
