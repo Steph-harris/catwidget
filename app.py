@@ -68,6 +68,12 @@ def index():
         'index', page=nxt, _external=True, _scheme='https') if nxt else None
     app.logger.warning('p:%s n:%s', prev_link, next_link)
 
+    if request.args.get('embed'):
+        return render_template('embed.html',
+                               animals=animals,
+                               next_link=next_link,
+                               prev_link=prev_link)
+
     return render_template('index.html',
                            animals=animals,
                            next_link=next_link,

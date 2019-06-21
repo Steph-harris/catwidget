@@ -1,0 +1,66 @@
+<div id="available-cats">
+    <script>
+    function reloadAvailableCats(link) {
+        fetch(link).then(function(response) {
+            return response.text();
+          }).then(function(myText) {
+              document.getElementById("available-cats").innerHTML = myText;
+          })
+    }
+    </script>
+    <div class="container">
+      {% if fallback %}
+        <a href="https://www.petfinder.com/search/cats-for-adoption/?shelter_id%5B0%5D=PA16&sort%5B0%5D=recently_added" target="_parent">
+          <div class="btn small-button-style-raised sqs-block-button sqs-block-button-element--small">View all Adoptable Kitties</div>
+        </a>
+      {% else %}
+          {%  if prev_link %}
+            <a onclick="reloadAvailableCats('{{ prev_link }}')"><div id="available-cats-prev" class="next-btn">Prev</div></a>
+          {% endif %}
+          {% for cat in animals %}
+            {% if cat['status'] == 'adoptable' %}
+              <div class="item">
+                  <div class="item-contents">
+                    <div class="item-image">
+                      <img src="{{ cat['photos'][0]['medium'] }}">
+                    </div>
+                    <div class="item-content-container">
+                        <div class="item-name">
+                          <b><p>{{ cat['name'].split(' -')[0] | safe}}</p></b>
+                        </div>
+                        <div class="item-descriptors">
+                          <div class="item-desc"><p>{{ cat['description'] }}</p></div>
+                            <div class="item-desc-attrs">
+                              <div class="item-desc"><b>Gender: </b>{{ cat['gender'] }}</div>
+                              <div class="item-likes">
+                                {% if cat['environment']['cats'] or cat['environment']['dogs'] or cat['environment']['children'] %}
+                                  <b>Likes:</b>
+                                {% endif %}
+                                {% if cat['environment']['cats'] %}
+                                  <img class="icon" src="{{ url_for('static', filename='cat-solid.svg', _external=True) }}">
+                                {% endif %}
+                                {% if cat['environment']['dogs'] %}
+                                  <img class="icon" src="{{ url_for('static', filename='dog-solid.svg', _external=True) }}">
+                                {% endif %}
+                                {% if cat['environment']['children'] %}
+                                  <img class="icon" src="{{ url_for('static', filename='child-solid.svg', _external=True) }}">
+                                {% endif %}
+                                </div>
+                            </div>
+                            <div class="item-button">
+                              <a href="{{ cat['url'] }}" target="_blank">
+                                <div class="btn small-button-style-raised sqs-block-button sqs-block-button-element--small">Adopt Me!</div>
+                              </a>
+                            </div>
+                        </div>
+                      </div>
+                  </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+          {%  if next_link %}
+            <a onclick="reloadAvailableCats('{{ next_link }}')"><div id="available-cats-next" class="next-btn">Next</div></a>
+          {% endif %}
+      {% endif %}
+    </div>
+</div>
