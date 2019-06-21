@@ -69,8 +69,8 @@ def index():
     embed = request.args.get('embed')
 
     if embed:
-        nxt_link = yarl.URL(next_link).update_query(embed)
-        prv_link = yarl.URL(prev_link).update_query(embed)
+        nxt_link = yarl.URL(str(next_link)).update_query(embed)
+        prv_link = yarl.URL(str(prev_link)).update_query(embed)
         return render_template('embed.html',
                                animals=animals,
                                next_link=nxt_link,
