@@ -17,7 +17,7 @@
         </a>
       {% else %}
           {%  if prev_link %}
-            <a href="{{ prev_link }}"><div class="next-btn">Prev</div></a>
+            <a href="{{ prev_link }}"><div id="available-cats-prev" class="next-btn">Prev</div></a>
           {% endif %}
           {% for cat in animals %}
             {% if cat['status'] == 'adoptable' %}
@@ -61,7 +61,7 @@
             {% endif %}
           {% endfor %}
           {%  if next_link %}
-            <a href="{{ next_link }}"><div class="next-btn">Next</div></a>
+            <a href="{{ next_link }}"><div id="available-cats-next" class="next-btn">Next</div></a>
           {% endif %}
       {% endif %}
     </div>
