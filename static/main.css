@@ -151,6 +151,9 @@ body {
 }
 .item-image {
 }
+.navigation-btn {
+  display: flex;
+}
 
 @media all and (max-width: 500px) {
   .item {
