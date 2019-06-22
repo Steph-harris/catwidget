@@ -8,6 +8,7 @@
   <link rel="mask-icon" href="{{ url_for('static', filename='favicon.ico', _external=True, _scheme='https') }}" color="#5bbad5">
   <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
   <meta name="theme-color" content="#ffffff">
+  <script>parent.postMessage({'task': 'scroll_top'}, '*');</script>
 </head>
   <body>
     <div id="available-cats-container" class="container">
@@ -60,10 +61,10 @@
       {% endif %}
         <div class="navigation-btn">
           {% if prev_link %}
-            <a href="{{ prev_link }}"><div id="available-cats-prev" class="next-btn" onclick="window.parent.scroll(0,0);">Prev</div></a>
+            <a href="{{ prev_link }}"><div id="available-cats-prev" class="next-btn">Prev</div></a>
           {% endif %}
           {%  if next_link %}
-            <a href="{{ next_link }}"><div id="available-cats-next" class="next-btn" onclick="window.parent.scroll(0,0);">Next</div></a>
+            <a href="{{ next_link }}"><div id="available-cats-next" class="next-btn">Next</div></a>
           {% endif %}
         </div>
     </div>
