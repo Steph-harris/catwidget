@@ -14,7 +14,7 @@
 {% endif %}
     <script>
         parent.postMessage({'task': 'scroll_top'}, '*');
-        parent.postMessage({'height': document.getElementById('available-cats-container').scrollHeight}, '*');
+        parent.postMessage({'height': document.getElementById('available-cats-container').offsetHeight}, '*');
     </script>
     <div id="available-cats-container" class="container">
       {% if fallback %}
