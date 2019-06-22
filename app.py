@@ -81,7 +81,9 @@ def index():
     return render_template('index.html',
                            animals=animals,
                            next_link=next_link,
-                           prev_link=prev_link)
+                           prev_link=prev_link,
+                           long=True if not request.args.get(
+                               'short') else False)
 
 
 if __name__ == "__main__":

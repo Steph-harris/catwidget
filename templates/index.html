@@ -1,3 +1,4 @@
+{% if long %}
 <!doctype html>
 <title>Stray Cat Blues</title>
 <head>
@@ -8,9 +9,13 @@
   <link rel="mask-icon" href="{{ url_for('static', filename='favicon.ico', _external=True, _scheme='https') }}" color="#5bbad5">
   <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
   <meta name="theme-color" content="#ffffff">
-  <script>parent.postMessage({'task': 'scroll_top'}, '*');</script>
 </head>
   <body>
+{% endif %}
+    <script>
+        parent.postMessage({'task': 'scroll_top'}, '*');
+        parent.postMessage({'height': document.getElementById('available-cats-container').scrollHeight}, '*');
+    </script>
     <div id="available-cats-container" class="container">
       {% if fallback %}
         <a href="https://www.petfinder.com/search/cats-for-adoption/?shelter_id%5B0%5D=PA16&sort%5B0%5D=recently_added" target="_parent">
@@ -68,4 +73,6 @@
           {% endif %}
         </div>
     </div>
+{% if long %}
   </body>
+{% endif %}
