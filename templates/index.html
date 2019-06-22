@@ -14,8 +14,8 @@
 {% endif %}
     <div id="available-cats-container" class="container">
     <script>
-        parent.postMessage({'task': 'scroll_top'}, '*');
-        parent.postMessage({'height': document.getElementById('available-cats-container').offsetHeight}, '*');
+        parent.postMessage({'task': 'scroll_top',
+                            'height': document.getElementById('available-cats-container').offsetHeight}, '*');
     </script>
       {% if fallback %}
         <a href="https://www.petfinder.com/search/cats-for-adoption/?shelter_id%5B0%5D=PA16&sort%5B0%5D=recently_added" target="_parent">
