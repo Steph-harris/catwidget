@@ -8,6 +8,31 @@
   <link rel="mask-icon" href="{{ url_for('static', filename='favicon.ico', _external=True, _scheme='https') }}" color="#5bbad5">
   <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
   <meta name="theme-color" content="#ffffff">
+  <script type="text/javascript">
+    function sendHeight()
+    {
+        if(parent.postMessage)
+        {
+            let height= document.getElementById('container').offsetHeight;
+            parent.postMessage(height, '*');
+        }
+    }
+
+    // Create browser compatible event handler.
+    let eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
+    let eventer = window[eventMethod];
+    let messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
+
+    // Listen for a message from the iframe.
+    eventer(messageEvent, function(e) {
+
+        if (isNaN(e.data)) return;
+
+        sendHeight();
+
+    },
+    false);
+  </script>
 </head>
   <body>
     <div class="container">
