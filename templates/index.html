@@ -8,6 +8,11 @@
   <link rel="mask-icon" href="{{ url_for('static', filename='favicon.ico', _external=True, _scheme='https') }}" color="#5bbad5">
   <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
   <meta name="theme-color" content="#ffffff">
+  <script>
+      window.onbeforeunload = function () {
+          window.scrollTo(0, 0);
+      }
+  </script>
 </head>
   <body>
     <div id="available-cats-container" class="container">
@@ -16,9 +21,6 @@
           <div class="btn small-button-style-raised sqs-block-button sqs-block-button-element--small">View all Adoptable Kitties</div>
         </a>
       {% else %}
-          {%  if prev_link %}
-            <a href="{{ prev_link }}"><div id="available-cats-prev" class="next-btn">Prev</div></a>
-          {% endif %}
           {% for cat in animals %}
             {% if cat['status'] == 'adoptable' %}
               <div class="item">
@@ -60,9 +62,14 @@
               </div>
             {% endif %}
           {% endfor %}
+      {% endif %}
+        <div class="navigation-btn">
+          {% if prev_link %}
+            <a href="{{ prev_link }}"><div id="available-cats-prev" class="next-btn">Prev</div></a>
+          {% endif %}
           {%  if next_link %}
             <a href="{{ next_link }}"><div id="available-cats-next" class="next-btn">Next</div></a>
           {% endif %}
-      {% endif %}
+        </div>
     </div>
   </body>
