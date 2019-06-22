@@ -64,13 +64,13 @@
                                   <b>Likes:</b>
                                 {% endif %}
                                 {% if cat['environment']['cats'] %}
-                                  <img class="icon" src="{{ url_for('static', filename='cat-solid.svg', _external=True) }}">
+                                  <img class="icon" src="{{ url_for('static', filename='cat-solid.svg', _external=True, _scheme='https') }}">
                                 {% endif %}
                                 {% if cat['environment']['dogs'] %}
-                                  <img class="icon" src="{{ url_for('static', filename='dog-solid.svg', _external=True) }}">
+                                  <img class="icon" src="{{ url_for('static', filename='dog-solid.svg', _external=True, _scheme='https') }}">
                                 {% endif %}
                                 {% if cat['environment']['children'] %}
-                                  <img class="icon" src="{{ url_for('static', filename='child-solid.svg', _external=True) }}">
+                                  <img class="icon" src="{{ url_for('static', filename='child-solid.svg', _external=True, _scheme='https') }}">
                                 {% endif %}
                                 </div>
                             </div>
