@@ -1,11 +1,6 @@
-body {
-  font-family: sans-serif;
-  font-family: Ubuntu;
-  font-size: 15px;
-  line-height: 20px;
-  position: absolute;
-}
 .container {
+  padding-top: 5%;
+  margin: auto;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -13,7 +8,7 @@ body {
 .item {
   text-align: center;
   width: 200px;
-  margin: 15px 3% 0px 3%;
+  margin: 15px 3% 20px 3%;
 }
 .item:hover {
   opacity: 0.8;
@@ -22,8 +17,6 @@ body {
 }
 .item-desc p {
   margin: 0;
-  padding: 1px;
-  /*height: 120px;*/
 }
 .icon {
   height: 20px;
@@ -31,6 +24,7 @@ body {
   object-fit: contain;
 }
 .item-content-container {
+
 }
 .item-image img {
   width: 200px;
@@ -40,16 +34,11 @@ body {
   max-height: 250px;
   object-fit: cover;
   height: 250px;
-  border-radius: 10px 10px 0 0;
 }
 .item-contents{
   position:relative;
   width: 200px;
   margin: 0 auto;
-}
-.item-contents:hover {
-  box-shadow: 0px 0px 22px 2px grey;
-  border-radius: 10px 10px 30px 30px;
 }
 .btn{
   color: white;
@@ -176,4 +165,67 @@ body {
     width: 100%;
     margin: 0 0 0 0;
   }
+}
+.checkmark {
+  margin: auto;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: block;
+  stroke-width: 2;
+  stroke: #fff;
+  stroke-miterlimit: 10;
+  box-shadow: inset 0px 0px 0px #7ac142;
+  animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
+}
+
+.checkmark__circle {
+  stroke-dasharray: 166;
+  stroke-dashoffset: 166;
+  stroke-width: 2;
+  stroke-miterlimit: 10;
+  stroke: #7ac142;
+  fill: none;
+  animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.checkmark__check {
+  transform-origin: 50% 50%;
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+}
+
+@keyframes stroke {
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes scale {
+  0%, 100% {
+    transform: none;
+  }
+  50% {
+    transform: scale3d(1.1, 1.1, 1);
+  }
+}
+
+@keyframes fill {
+  100% {
+    box-shadow: inset 0px 0px 0px 30px #7ac142;
+  }
+}
+.thank-you-container {
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+}
+.thank-you-text {
+  margin: 0 0 30px 0;
+}
+svg {
+  color: #52bad1;
+  object-fit: cover;
+  width: 60px;
 }

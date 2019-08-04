@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sponsorship</title>
+    <script src="https://www.paypal.com/sdk/js?client-id=Abs4cLNNgXuKZrdOEcd9bpJ2hZOa0oBO-oMHQHwlxeTLqFrjlRfkcAU-39zIGusxCh1cw0L37FyGjcEY"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='favicon.ico', _external=True, _scheme=scheme) }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.ico', _external=True, _scheme=scheme) }}" sizes="32x32">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.ico', _external=True, _scheme=scheme) }}" sizes="16x16">
+    <link rel="mask-icon" href="{{ url_for('static', filename='favicon.ico', _external=True, _scheme=scheme) }}" color="#5bbad5">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+  <script>
+  paypal.Buttons({
+    createOrder: function(data, actions) {
+      return actions.order.create({
+        purchase_units: [{
+          amount: {
+            value: {{ sponsor_amount }}
+          }
+        }]
+      });
+    },
+    onApprove: function(data, actions) {
+      return actions.order.capture().then(function(details) {
+        // Call your server to save the transaction
+        return fetch('{{ order_callback_url }}', {
+          method: 'post',
+          headers: {
+            'content-type': 'application/json'
+          },
+          body: JSON.stringify({
+              create_time: details.create_time,
+              sponsor_amount: details.purchase_units["0"].amount.value,
+              given_name: details.payer.name.given_name + ' ' + details.payer.name.surname,
+              email: details.payer.email_address,
+              paypal_order_id: details.id,
+              cat_self_link: "{{  cat['url'] }}",
+              cat_img: "{{ cat['photos'][0]['medium'] }}"
+          })
+        }).then(function(response) {
+          if (response.ok) {
+            document.getElementById('payment-item').innerHTML = '' +
+                '<div class="thank-you-container">' +
+                '  <h3 class=thank-you-text">Thank you for your support!</h3>' +
+                '  <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">' +
+                '    <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>' +
+                '    <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>' +
+                '  </svg>' +
+                '</div>'
+          }
+          {# add failure scenario #}
+        });
+      });
+    }
+  }).render('#paypal-button-container');
+  </script>
+</head>
+<body>
+<div class="container">
+    {% if cat['status'] == 'adoptable' %}
+        <div class="item">
+            <svg aria-hidden="true" focusable="false" data-prefix="fal" data-icon="arrow-circle-left" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-arrow-circle-left fa-w-16"><path fill="currentColor" d="M504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zM256 472c-118.7 0-216-96.1-216-216 0-118.7 96.1-216 216-216 118.7 0 216 96.1 216 216 0 118.7-96.1 216-216 216zm-12.5-92.5l-115.1-115c-4.7-4.7-4.7-12.3 0-17l115.1-115c4.7-4.7 12.3-4.7 17 0l6.9 6.9c4.7 4.7 4.7 12.5-.2 17.1L181.7 239H372c6.6 0 12 5.4 12 12v10c0 6.6-5.4 12-12 12H181.7l85.6 82.5c4.8 4.7 4.9 12.4.2 17.1l-6.9 6.9c-4.8 4.7-12.4 4.7-17.1 0z" class=""></path></svg>
+        </div>
+        <div class="item">
+          <a href="{{ cat['url'] }}">
+          <div class="item-contents">
+            <div class="item-image">
+              <img src="{{ cat['photos'][0]['medium'] }}">
+            </div>
+            <div class="item-content-container">
+                <div class="item-name">
+                  <b><p>{{ cat['name'].split(' -')[0] | safe}}</p></b>
+                </div>
+                <div class="item-descriptors">
+                  <div class="item-desc"><p>{{ cat['description'] }}</p></div>
+                    <div class="item-desc-attrs">
+                      <div class="item-desc"><b>Gender: </b>{{ cat['gender'] }}</div>
+                      <div class="item-likes">
+                        {% if cat['environment']['cats'] or cat['environment']['dogs'] or cat['environment']['children'] %}
+                          <b>Likes:</b>
+                        {% endif %}
+                        {% if cat['environment']['cats'] %}
+                          <img class="icon" src="{{ url_for('static', filename='cat-solid.svg', _external=True, _scheme=scheme) }}">
+                        {% endif %}
+                        {% if cat['environment']['dogs'] %}
+                          <img class="icon" src="{{ url_for('static', filename='dog-solid.svg', _external=True, _scheme=scheme) }}">
+                        {% endif %}
+                        {% if cat['environment']['children'] %}
+                          <img class="icon" src="{{ url_for('static', filename='child-solid.svg', _external=True, _scheme=scheme) }}">
+                        {% endif %}
+                        </div>
+                    </div>
+                </div>
+              </div>
+          </div>
+          </a>
+        </div>
+    {% endif %}
+    <div class="item">
+      <div id="payment-item">
+        <div class="item-desc">
+            <h3>Sponsor Amount: ${{ sponsor_amount }}</h3>
+            <div>
+                <h6>Pay the adoption fee and make it easier for our little friend to find their forever home!</h6>
+            </div>
+        </div>
+        <div id="paypal-button-container"></div>
+      </div>
+    </div>
+</div>
+</body>
+</html>

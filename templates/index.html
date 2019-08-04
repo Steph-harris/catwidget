@@ -1,17 +1,15 @@
-{% if long %}
 <!doctype html>
 <title>Stray Cat Blues</title>
 <head>
-  <link rel="stylesheet" href="{{ url_for('static', filename='main.css', _external=True, _scheme='https') }}">
-  <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='favicon.ico', _external=True, _scheme='https') }}">
-  <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.ico', _external=True, _scheme='https') }}" sizes="32x32">
-  <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.ico', _external=True, _scheme='https') }}" sizes="16x16">
-  <link rel="mask-icon" href="{{ url_for('static', filename='favicon.ico', _external=True, _scheme='https') }}" color="#5bbad5">
+  <link rel="stylesheet" href="{{ url_for('static', filename='main.css', _external=True, _scheme=scheme) }}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='favicon.ico', _external=True, _scheme=scheme) }}">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.ico', _external=True, _scheme=scheme) }}" sizes="32x32">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.ico', _external=True, _scheme=scheme) }}" sizes="16x16">
+  <link rel="mask-icon" href="{{ url_for('static', filename='favicon.ico', _external=True, _scheme=scheme) }}" color="#5bbad5">
   <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
   <meta name="theme-color" content="#ffffff">
 </head>
   <body>
-{% endif %}
     <div id="available-cats-container" class="container">
       {% if fallback %}
         <a href="https://www.petfinder.com/search/cats-for-adoption/?shelter_id%5B0%5D=PA16&sort%5B0%5D=recently_added" target="_parent">
@@ -20,7 +18,8 @@
       {% else %}
           {% for cat in animals %}
             {% if cat['status'] == 'adoptable' %}
-              <div class="item">
+                <div class="item">
+                  <a href="{{ cat['url'] }}">
                   <div class="item-contents">
                     <div class="item-image">
                       <img src="{{ cat['photos'][0]['medium'] }}">
@@ -38,25 +37,28 @@
                                   <b>Likes:</b>
                                 {% endif %}
                                 {% if cat['environment']['cats'] %}
-                                  <img class="icon" src="{{ url_for('static', filename='cat-solid.svg', _external=True, _scheme='https') }}">
+                                  <img class="icon" src="{{ url_for('static', filename='cat-solid.svg', _external=True, _scheme=scheme) }}">
                                 {% endif %}
                                 {% if cat['environment']['dogs'] %}
-                                  <img class="icon" src="{{ url_for('static', filename='dog-solid.svg', _external=True, _scheme='https') }}">
+                                  <img class="icon" src="{{ url_for('static', filename='dog-solid.svg', _external=True, _scheme=scheme) }}">
                                 {% endif %}
                                 {% if cat['environment']['children'] %}
-                                  <img class="icon" src="{{ url_for('static', filename='child-solid.svg', _external=True, _scheme='https') }}">
+                                  <img class="icon" src="{{ url_for('static', filename='child-solid.svg', _external=True, _scheme=scheme) }}">
                                 {% endif %}
                                 </div>
                             </div>
-                            <div class="item-button">
-                              <a href="{{ cat['url'] }}" target="_blank">
-                                <div class="btn small-button-style-raised sqs-block-button sqs-block-button-element--small">Adopt Me!</div>
-                              </a>
+                            <div class="btn-container">
+                                {% if sponsor_on %}
+                                  <a href="{{ url_for("sponsor", cat_id=cat['id']) }}" target="_blank">
+                                    <div class="next-btn">Sponsor Me!</div>
+                                  </a>
+                                {% endif %}
                             </div>
                         </div>
                       </div>
                   </div>
-              </div>
+                  </a>
+                </div>
             {% endif %}
           {% endfor %}
       {% endif %}
@@ -74,5 +76,5 @@
 {% endif %}
 <script>
     parent.postMessage({'task': 'scroll_top',
-                        'height': document.getElementById('available-cats-container').offsetHeight}, '*');
+                        'height': document.getElementById('available-cats-container').offsetHeight + 10}, '*');
 </script>
