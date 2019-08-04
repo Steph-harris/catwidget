@@ -26,6 +26,7 @@ BASE_URL = yarl.URL(
     {'organization': 'PA16', 'status': 'adoptable'})
 CLIENT_ID = os.environ['CLIENT_ID']
 CLIENT_SECRET = os.environ['CLIENT_SECRET']
+PAYPAL_CLIENT_ID = os.environ['PAYPAL_CLIENT_ID']
 SCHEME = os.environ.get('SCHEME', 'https')
 
 
@@ -105,7 +106,8 @@ def sponsor(cat_id):
         scheme=SCHEME,
         order_callback_url=os.environ.get('ORDER_CALLBACK_URL',
                                           'http://localhost/sponsor'),
-        sponsor_amount=sponsor_amount)
+        sponsor_amount=sponsor_amount,
+        paypal_client_id=PAYPAL_CLIENT_ID)
 
 
 if __name__ == "__main__":
