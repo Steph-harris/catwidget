@@ -13,7 +13,7 @@ body {
 .item {
   text-align: center;
   width: 200px;
-  margin: 15px 3% 0px 3%;
+  margin: 30px 3% 0px 3%;
 }
 .item:hover {
   opacity: 0.8;

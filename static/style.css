@@ -229,3 +229,11 @@ svg {
   object-fit: cover;
   width: 60px;
 }
+
+svg:hover {
+  opacity: 0.8;
+}
+.item-sm {
+  width: 65px;
+  padding: 20px;
+}
