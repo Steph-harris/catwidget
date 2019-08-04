@@ -39,6 +39,7 @@
               email: details.payer.email_address,
               paypal_order_id: details.id,
               cat_self_link: "{{  cat['url'] }}",
+              cat_name: "{{ cat['name'].split(' -')[0] | safe}}",
               cat_img: "{{ cat['photos'][0]['medium'] }}"
           })
         }).then(function(response) {
