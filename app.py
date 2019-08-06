@@ -9,6 +9,7 @@ import requests
 import yarl
 
 
+version = '1.0.0'
 app = Flask(__name__)
 app.config.from_mapping({
     "DEBUG": False,
@@ -21,9 +22,10 @@ CORS(app, resources={r"/": {"origins": os.environ.get(
 SERVER_NAME = os.environ.get('SERVER_ NAME', 'localhost')
 cache = Cache(app)
 
-BASE_URL = yarl.URL(
+BASE_PETFINDER_URL = yarl.URL(
     'https://api.petfinder.com/v2/animals').with_query(
     {'organization': 'PA16', 'status': 'adoptable'})
+BASE_SPONSOR_URL = yarl.URL('https://sponsor-cat.herokuapp.com')
 CLIENT_ID = os.environ['CLIENT_ID']
 CLIENT_SECRET = os.environ['CLIENT_SECRET']
 PAYPAL_CLIENT_ID = os.environ['PAYPAL_CLIENT_ID']
@@ -34,9 +36,9 @@ SCHEME = os.environ.get('SCHEME', 'https')
 def index():
     page = request.args.get('page', '')
     if page:
-        url = BASE_URL.join(yarl.URL(page))
+        url = BASE_PETFINDER_URL.join(yarl.URL(page))
     else:
-        url = BASE_URL
+        url = BASE_PETFINDER_URL
     body = make_petfinder_request(url)
     if not body:
         return render_template('index.html', fallback=True)
@@ -63,6 +65,7 @@ def index():
 
 
 def make_petfinder_request(url):
+    # TODO: make logic fail-safe
     token_response = requests.post(
         'https://api.petfinder.com/v2/oauth2/token',
         headers={'Content-Type': 'application/x-www-form-urlencoded'},
@@ -90,15 +93,40 @@ def make_petfinder_request(url):
     return response.json()
 
 
+def make_sponsor_request(url, body):
+    # TODO: make logic fail-safe
+    app.logger.info('Getting url %s', url)
+    response = requests.get(url,
+                            json=body,
+                            headers={'User-Agent': f'catwidget/{version}',
+                                     'Content-Type': 'application/json'},
+                            timeout=(3.05, 3))
+    if response.status_code != 200:
+        app.logger.warning('Error making request to url:%r error:%r',
+                           url,
+                           response.content)
+        return
+    app.logger.debug(response.json())
+    return response.json()
+
+
 @cross_origin(allow_headers=['Content-Type'])
 @app.route("/sponsor/<cat_id>", methods=['GET'])
 def sponsor(cat_id):
-    url = BASE_URL.with_query({}) / cat_id
-    body = make_petfinder_request(url)
+    sponsor_url = BASE_SPONSOR_URL / 'sponsored'
+    sponsor_body = make_sponsor_request(sponsor_url,
+                                        body={'cat_ids': [cat_id]})
+
+    petfinder_url = BASE_PETFINDER_URL.with_query({}) / cat_id
+    body = make_petfinder_request(petfinder_url)
     if not body:
         return render_template('index.html', fallback=True)
     prices = {'baby': 105, 'young': 95, 'adult': 95, 'senior': 95}
     sponsor_amount = prices[body['animal']['age'].lower()]
+
+    if sponsor_body['cat_ids'][0] == cat_id:  # TODO: make this better
+        return render_template('already-sponsor.html')
+
     return render_template(
         'sponsor.html',
         cat_id=cat_id,

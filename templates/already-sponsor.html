@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Sponsorship</title>
-    <script src="https://www.paypal.com/sdk/js?client-id={{ paypal_client_id }}"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -13,53 +12,6 @@
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.ico', _external=True, _scheme=scheme) }}" sizes="16x16">
     <link rel="mask-icon" href="{{ url_for('static', filename='favicon.ico', _external=True, _scheme=scheme) }}" color="#5bbad5">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
-  <script>
-  paypal.Buttons({
-    createOrder: function(data, actions) {
-      return actions.order.create({
-        purchase_units: [{
-          amount: {
-            value: {{ sponsor_amount }}
-          }
-        }]
-      });
-    },
-    onApprove: function(data, actions) {
-      return actions.order.capture().then(function(details) {
-        // Call your server to save the transaction
-        return fetch('{{ order_callback_url }}', {
-          method: 'post',
-          headers: {
-            'content-type': 'application/json'
-          },
-          body: JSON.stringify({
-              create_time: details.create_time,
-              sponsor_amount: details.purchase_units["0"].amount.value,
-              given_name: details.payer.name.given_name + ' ' + details.payer.name.surname,
-              email: details.payer.email_address,
-              paypal_order_id: details.id,
-              petfinder_id: {{ cat['id'] }},
-              cat_self_link: "{{  cat['url'] }}",
-              cat_name: "{{ cat['name'].split(' -')[0] | safe}}",
-              cat_img: "{{ cat['photos'][0]['medium'] }}"
-          })
-        }).then(function(response) {
-          if (response.ok) {
-            document.getElementById('payment-item').innerHTML = '' +
-                '<div class="thank-you-container">' +
-                '  <h3 class=thank-you-text">Thank you for your support!</h3>' +
-                '  <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">' +
-                '    <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>' +
-                '    <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>' +
-                '  </svg>' +
-                '</div>'
-          }
-          {# add failure scenario #}
-        });
-      });
-    }
-  }).render('#paypal-button-container');
-  </script>
 </head>
 <body>
 <div class="container">
@@ -105,12 +57,11 @@
     <div class="item">
       <div id="payment-item">
         <div class="item-desc">
-            <h3>Sponsor Amount: ${{ sponsor_amount }}</h3>
+            <h3>Adoption Fee Paid!</h3>
             <div>
-                <h6>Pay the adoption fee and make it easier for our little friend to find their forever home!</h6>
+                <h6>My adoption fee has already been paid! Please consider sponsoring another furry cat by clicking the back button!</h6>
             </div>
         </div>
-        <div id="paypal-button-container"></div>
       </div>
     </div>
 </div>
