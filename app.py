@@ -115,8 +115,7 @@ def make_sponsor_request(url, body):
     response = requests.post(url,
                              data=body,
                              headers={'User-Agent': f'catwidget/{version}',
-                                      'Content-Type': 'application/json',
-                                      'Host': SERVER_NAME},
+                                      'Content-Type': 'application/json'},
                              timeout=(3.05, 3))
     app.logger.info('Request: %r', response.request.headers)
     if response.status_code != 200:
