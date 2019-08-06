@@ -35,7 +35,7 @@ app.config.from_mapping({
 })
 CORS(app, resources={r"/": {"origins": os.environ.get(
     'TRUSTED_ORIGINS', 'localhost 127.0.0.1')}})
-SERVER_NAME = os.environ.get('SERVER_ NAME', 'localhost')
+SERVER_NAME = os.environ.get('SERVER_NAME', 'localhost')
 cache = Cache(app)
 
 BASE_PETFINDER_URL = yarl.URL(
