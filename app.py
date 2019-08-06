@@ -96,8 +96,8 @@ def make_petfinder_request(url):
 def make_sponsor_request(url, body):
     # TODO: make logic fail-safe
     app.logger.info('Getting url %s', url)
-    response = requests.get(url,
-                            json=body,
+    response = requests.post(url,
+                            data=body,
                             headers={'User-Agent': f'catwidget/{version}',
                                      'Content-Type': 'application/json'},
                             timeout=(3.05, 3))
