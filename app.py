@@ -145,7 +145,10 @@ def sponsor(cat_id):
 
     # TODO: make this better
     if sponsor_body and int(sponsor_body['cat_ids'][0]) == int(cat_id):
-        return render_template('already-sponsor.html')
+        return render_template('already-sponsor.html',
+                               cat_id=cat_id,
+                               cat=body['animal'],
+                               scheme=SCHEME)
 
     return render_template(
         'sponsor.html',
