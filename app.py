@@ -118,7 +118,7 @@ def make_sponsor_request(url, body):
                                       'Content-Type': 'application/json',
                                       'Host': SERVER_NAME},
                              timeout=(3.05, 3))
-    app.logger.info('Request: %r', response.headers)
+    app.logger.info('Request: %r', response.request.headers)
     if response.status_code != 200:
         app.logger.warning('Error making request to url:%r error:%r',
                            url,
