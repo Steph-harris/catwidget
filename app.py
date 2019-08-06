@@ -1,3 +1,4 @@
+from logging.config import dictConfig
 import os
 
 from html import unescape
@@ -11,6 +12,21 @@ import yarl
 
 version = '1.0.0'
 app = Flask(__name__)
+dictConfig({
+    'version': 1,
+    'formatters': {'default': {
+        'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
+    }},
+    'handlers': {'wsgi': {
+        'class': 'logging.StreamHandler',
+        'stream': 'ext://flask.logging.wsgi_errors_stream',
+        'formatter': 'default'
+    }},
+    'root': {
+        'level': 'INFO',
+        'handlers': ['wsgi']
+    }
+})
 app.config.from_mapping({
     "DEBUG": False,
     "CACHE_TYPE": "simple",
