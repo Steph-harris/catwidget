@@ -144,7 +144,7 @@ def sponsor(cat_id):
     sponsor_amount = prices[body['animal']['age'].lower()]
 
     # TODO: make this better
-    if sponsor_body and sponsor_body['cat_ids'][0] == cat_id:
+    if sponsor_body and int(sponsor_body['cat_ids'][0]) == int(cat_id):
         return render_template('already-sponsor.html')
 
     return render_template(
