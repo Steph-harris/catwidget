@@ -113,10 +113,11 @@ def make_sponsor_request(url, body):
     # TODO: make logic fail-safe
     app.logger.info('Getting url %s', url)
     response = requests.post(url,
-                            data=body,
-                            headers={'User-Agent': f'catwidget/{version}',
-                                     'Content-Type': 'application/json'},
-                            timeout=(3.05, 3))
+                             data=body,
+                             headers={'User-Agent': f'catwidget/{version}',
+                                      'Content-Type': 'application/json'},
+                             timeout=(3.05, 3))
+    app.logger.info('Request: %r', response.headers)
     if response.status_code != 200:
         app.logger.warning('Error making request to url:%r error:%r',
                            url,
