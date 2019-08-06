@@ -1,4 +1,5 @@
 from logging.config import dictConfig
+import json
 import os
 
 from html import unescape
@@ -113,7 +114,7 @@ def make_sponsor_request(url, body):
     # TODO: make logic fail-safe
     app.logger.info('Getting url %s', url)
     response = requests.post(url,
-                             data=body,
+                             data=json.dumps(body),
                              headers={'User-Agent': f'catwidget/{version}',
                                       'Content-Type': 'application/json',
                                       'Accept': 'application/json'},
