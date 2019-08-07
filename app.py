@@ -34,8 +34,10 @@ app.config.from_mapping({
     "CACHE_DEFAULT_TIMEOUT": 300,
     "PREFERRED_URL_SCHEME": "https"
 })
-CORS(app, resources={r"/": {"origins": os.environ.get(
-    'TRUSTED_ORIGINS', 'localhost 127.0.0.1')}})
+TRUSTED_ORIGINS = os.environ.get(
+    'TRUSTED_ORIGINS', 'localhost 127.0.0.1')
+CORS(app, resources={r"/": {"origins": TRUSTED_ORIGINS},
+                     r"/sponsor": {"origins": TRUSTED_ORIGINS}})
 SERVER_NAME = os.environ.get('SERVER_NAME', 'localhost')
 cache = Cache(app)
 
@@ -129,8 +131,8 @@ def make_sponsor_request(url, body):
     return response.json()
 
 
-@cross_origin(allow_headers=['Content-Type'])
 @app.route("/sponsor/<cat_id>", methods=['GET'])
+@cross_origin(origins=TRUSTED_ORIGINS, allow_headers=['Content-Type'])
 def sponsor(cat_id):
     sponsor_url = BASE_SPONSOR_URL / 'sponsored'
     sponsor_body = make_sponsor_request(sponsor_url,
@@ -143,7 +145,6 @@ def sponsor(cat_id):
     prices = {'baby': 105, 'young': 95, 'adult': 95, 'senior': 95}
     sponsor_amount = prices[body['animal']['age'].lower()]
 
-    # TODO: make this better
     cat_ids = sponsor_body.get('cat_ids') if sponsor_body else None
     if len(cat_ids) > 0 and str(cat_ids.pop(0)) == str(cat_id):
         return render_template('already-sponsor.html',
