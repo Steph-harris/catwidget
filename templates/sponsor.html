@@ -56,9 +56,10 @@
                 '  </svg>' +
                 '</div>'
           } else {
-              document.getElementById('payment-item').innerHTML += 'oops! Please try again.'
           }
-        });
+        }).catch(
+          document.getElementById('payment-item').innerHTML += 'oops! Please try again.';
+        );
       });
     }
   }).render('#paypal-button-container');
