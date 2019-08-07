@@ -56,7 +56,7 @@
                 '  </svg>' +
                 '</div>'
           }
-        }).catch(function() {
+        }).catch(function(error) {
           let html = document.getElementById('payment-item').innerHTML
           document.getElementById('payment-item').innerHTML = html + 'oops! Please try again.';
         });
