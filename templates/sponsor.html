@@ -57,7 +57,8 @@
                 '</div>'
           }
         }).catch(function() {
-          document.getElementById('payment-item').innerHTML += 'oops! Please try again.';
+          let html = document.getElementById('payment-item').innerHTML
+          document.getElementById('payment-item').innerHTML = html + 'oops! Please try again.';
         });
       });
     }
