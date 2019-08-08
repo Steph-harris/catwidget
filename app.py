@@ -74,13 +74,15 @@ def index():
     next_link = url_for(
         'index', page=nxt, _external=True, _scheme=SCHEME) if nxt else None
     show_sponsor = request.args.get('sponsor', None)
+    header = request.args.get('header', False)
 
     return render_template('index.html',
                            animals=animals,
                            scheme=SCHEME,
                            sponsor_on=show_sponsor,
                            next_link=next_link,
-                           prev_link=prev_link)
+                           prev_link=prev_link,
+                           header=header)
 
 
 def make_petfinder_request(url):
@@ -152,6 +154,7 @@ def sponsor(cat_id):
                                cat=body['animal'],
                                scheme=SCHEME)
     header = request.args.get('header', False)
+
     return render_template(
         'sponsor.html',
         cat_id=cat_id,

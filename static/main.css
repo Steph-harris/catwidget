@@ -69,6 +69,18 @@ body {
   -moz-box-shadow: 0 2px 0 0 #34abc5;
   box-shadow: 0 2px 0 0 #34abc5;
 }
+.header {
+    color: #52bad1;
+    line-height: 1.2em;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 49px;
+    letter-spacing: -0.02em;
+    text-transform: none;
+    -webkit-font-smoothing: subpixel-antialiased;
+    text-rendering: optimizeLegibility;
+    font-family: sans-serif;
+}
 .small-button-style-raised .sqs-block-button .sqs-block-button-element--small,
 .medium-button-style-raised .sqs-block-button .sqs-block-button-element--medium,
 .large-button-style-raised .sqs-block-button .sqs-block-button-element--large {
