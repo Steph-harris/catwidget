@@ -154,11 +154,13 @@ def sponsor(cat_id):
                                cat=body['animal'],
                                scheme=SCHEME)
     header = request.args.get('header', False)
-
+    animal = {k: unescape(str(v))
+              if k in ('name', 'description') else v
+              for k, v in body['animal'].items()}
     return render_template(
         'sponsor.html',
         cat_id=cat_id,
-        cat=body['animal'],
+        cat=animal,
         scheme=SCHEME,
         order_callback_url=os.environ.get('ORDER_CALLBACK_URL',
                                           'http://localhost/sponsor'),
