@@ -50,11 +50,13 @@
                                 {% endif %}
                                 </div>
                             </div>
+                            {% if sponsor_on %}
                             <div class="btn-container">
                                   <a href="{{ url_for("sponsor", **{'cat_id': cat['id'], 'header': 'on'}) }}">
                                     <div class="next-btn">Sponsor Me!</div>
                                   </a>
                             </div>
+                            {% endif %}
                         </div>
                       </div>
                   </div>
