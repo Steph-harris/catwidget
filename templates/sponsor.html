@@ -16,6 +16,9 @@
   <script>
   paypal.Buttons({
     createOrder: function(data, actions) {
+      document.getElementById('failure-msg').hidden = true;
+      document.getElementById('processing-msg').hidden = false;
+      document.getElementById('paypal-button-container').style.display = 'none';
       return actions.order.create({
         purchase_units: [{
           amount: {
@@ -25,14 +28,23 @@
       });
     },
     onError: function (err) {
-      html = document.getElementById('payment-item').innerHTML;
-      document.getElementById('payment-item').innerHTML = 'oops! Failed to process your payment. Please try again.' + html;
+      document.getElementById('failure-msg').hidden = false;
+      document.getElementById('processing-msg').hidden = true;
+      document.getElementById('paypal-button-container').style.display = 'block';
+
     },
     onApprove: function(data, actions) {
       return actions.order.capture().then(function(details) {
-        document.getElementById('payment-item').innerHTML = '...'
+        // order was declined
+        if (details.error === 'INSTRUMENT_DECLINED') {
+          document.getElementById('paypal-button-container').style.display = 'block';
+          return actions.restart();
+        }
+        document.getElementById('failure-msg').hidden = true;
+        document.getElementById('processing-msg').hidden = true;
+        document.getElementById('paypal-button-container').style.visibility = 'none';
 
-        // Call your server to save the transaction
+        // save the transaction
         return fetch('{{ order_callback_url }}', {
           method: 'post',
           headers: {
@@ -50,7 +62,6 @@
               cat_img: "{{ cat['photos'][0]['medium'] }}"
           })
         }).then(function(response) {
-          if (response.ok) {
             document.getElementById('payment-item').innerHTML = '' +
                 '<div class="thank-you-container">' +
                 '  <h3 class=thank-you-text">Thank you for your support!</h3>' +
@@ -58,8 +69,9 @@
                 '    <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>' +
                 '    <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>' +
                 '  </svg>' +
-                '</div>'
-          }
+                '</div>';
+        }).catch(function(error) {
+            return
         });
       });
     }
@@ -115,6 +127,8 @@
                 <h6>Pay the adoption fee and make it easier for our little friend to find their forever home!</h6>
             </div>
         </div>
+          <div id="failure-msg" class="fail" hidden><h5>Oops! Failed to process your payment. Please try again.</h5></div>
+          <div id="processing-msg" hidden><div class="loading"></div></div>
         <div id="paypal-button-container"></div>
       </div>
     </div>
