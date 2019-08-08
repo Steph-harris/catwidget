@@ -79,6 +79,10 @@
   </script>
 </head>
 <body>
+{% if header %}
+    <div class="sqs-block html-block sqs-block-html" data-block-type="2" id="block-8bf4f4c158023a643efe">
+        <div class="sqs-block-content"><h2 class="header" style="text-align:center;white-space:pre-wrap;">All Adoptable Kitties</h2></div></div>
+{% endif %}
 <div class="container">
     {% if cat['status'] == 'adoptable' %}
         <div class="item-sm">

@@ -151,7 +151,7 @@ def sponsor(cat_id):
                                cat_id=cat_id,
                                cat=body['animal'],
                                scheme=SCHEME)
-
+    header = request.args.get('header', False)
     return render_template(
         'sponsor.html',
         cat_id=cat_id,
@@ -160,7 +160,8 @@ def sponsor(cat_id):
         order_callback_url=os.environ.get('ORDER_CALLBACK_URL',
                                           'http://localhost/sponsor'),
         sponsor_amount=sponsor_amount,
-        paypal_client_id=PAYPAL_CLIENT_ID)
+        paypal_client_id=PAYPAL_CLIENT_ID,
+        header=header)
 
 
 if __name__ == "__main__":
