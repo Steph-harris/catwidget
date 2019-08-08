@@ -81,6 +81,10 @@ body {
     text-rendering: optimizeLegibility;
     font-family: sans-serif;
 }
+.header-container {
+  text-align: center;
+  width: 100%;
+}
 .small-button-style-raised .sqs-block-button .sqs-block-button-element--small,
 .medium-button-style-raised .sqs-block-button .sqs-block-button-element--medium,
 .large-button-style-raised .sqs-block-button .sqs-block-button-element--large {
