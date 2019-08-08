@@ -80,7 +80,7 @@
 </head>
 <body>
 {% if header %}
-    <h2 class="header">All Adoptable Kitties</h2>
+    <div class="header-container"><h2 class="header">All Adoptable Kitties</h2></div>
 {% endif %}
 <div id="available-cats-container" class="container">
     {% if cat['status'] == 'adoptable' %}

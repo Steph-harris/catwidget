@@ -281,3 +281,6 @@ svg:hover {
     text-rendering: optimizeLegibility;
     font-family: sans-serif;
 }
+.header-container {
+  text-align: center;
+}
