@@ -51,8 +51,7 @@
                                 </div>
                             </div>
                             <div class="btn-container">
-                                {% if sponsor_on %}
-                                  <a href="{{ url_for("sponsor", cat_id=cat['id']) }}">
+                                  <a href="{{ url_for("sponsor", {'cat_id': cat['id'], 'header': 'on'}) }}">
                                     <div class="next-btn">Sponsor Me!</div>
                                   </a>
                                 {% endif %}
@@ -74,9 +73,7 @@
           {% endif %}
         </div>
     </div>
-{% if long %}
   </body>
-{% endif %}
 <script>
     parent.postMessage({'task': 'scroll_top',
                         'height': document.getElementById('available-cats-container').offsetHeight + 70}, '*');
