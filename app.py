@@ -80,11 +80,14 @@ def index():
     prv = pagination.get('previous', {}).get('href', '')
     nxt = pagination.get('next', {}).get('href', '')
 
-    prev_link = url_for(
-        'index', page=prv, _external=True, _scheme=SCHEME) if prv else None
-    next_link = url_for(
-        'index', page=nxt, _external=True, _scheme=SCHEME) if nxt else None
     show_sponsor = request.args.get('sponsor', None)
+    kwargs = {'_external': True, '_scheme': SCHEME}
+    if show_sponsor:
+        kwargs['sponsor'] = show_sponsor
+    prev_link = url_for(
+        'index', page=prv, **kwargs) if prv else None
+    next_link = url_for(
+        'index', page=nxt, **kwargs) if nxt else None
     header = request.args.get('header', False)
 
     return render_template('index.html',
