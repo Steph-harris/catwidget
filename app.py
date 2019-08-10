@@ -44,7 +44,8 @@ cache = Cache(app)
 BASE_PETFINDER_URL = yarl.URL(
     'https://api.petfinder.com/v2/animals').with_query(
     {'organization': 'PA16', 'status': 'adoptable'})
-BASE_SPONSOR_URL = yarl.URL('https://sponsor-cat.herokuapp.com')
+BASE_SPONSOR_URL = yarl.URL(
+    os.environ.get('BASE_SPONSOR_URL', 'https://sponsor-cat.herokuapp.com'))
 CLIENT_ID = os.environ['CLIENT_ID']
 CLIENT_SECRET = os.environ['CLIENT_SECRET']
 PAYPAL_CLIENT_ID = os.environ['PAYPAL_CLIENT_ID']
@@ -65,6 +66,16 @@ def index():
                if k in ('name', 'description') else v
                for k, v in item.items()}
                for item in body['animals']]
+    cat_ids = {cat['id'] for cat in animals}
+    sponsored_cats = []
+    try:
+        sponsored_cats = make_sponsor_request({'cat_ids': list(cat_ids)})
+    except:
+        pass
+    if sponsored_cats:
+        for animal in animals:
+            if animal['id'] in sponsored_cats:
+                animal['is_sponsored'] = True
     pagination = body.get('pagination', {}).get('_links', {})
     prv = pagination.get('previous', {}).get('href', '')
     nxt = pagination.get('next', {}).get('href', '')
@@ -114,15 +125,16 @@ def make_petfinder_request(url):
     return response.json()
 
 
-def make_sponsor_request(url, body):
+def make_sponsor_request(body):
     # TODO: make logic fail-safe
-    app.logger.info('Getting url %s', url)
+    url = BASE_SPONSOR_URL / 'sponsored'
+    app.logger.info('Posting to url %s', url)
     response = requests.post(url,
                              data=json.dumps(body),
                              headers={'User-Agent': f'catwidget/{version}',
                                       'Content-Type': 'application/json',
                                       'Accept': 'application/json'},
-                             timeout=(3.05, 3))
+                             timeout=(6.05, 10))
     app.logger.info('Request: %r', response.request.headers)
     if response.status_code != 200:
         app.logger.warning('Error making request to url:%r error:%r',
@@ -130,15 +142,13 @@ def make_sponsor_request(url, body):
                            response.content)
         return
     app.logger.debug(response.json())
-    return response.json()
+    return response.json().get('cat_ids')
 
 
 @app.route("/sponsor/<cat_id>", methods=['GET'])
 @cross_origin(origins=TRUSTED_ORIGINS, allow_headers=['Content-Type'])
 def sponsor(cat_id):
-    sponsor_url = BASE_SPONSOR_URL / 'sponsored'
-    sponsor_body = make_sponsor_request(sponsor_url,
-                                        body={'cat_ids': [cat_id]})
+    sponsor_body = make_sponsor_request(body={'cat_ids': [cat_id]})
 
     petfinder_url = BASE_PETFINDER_URL.with_query({}) / cat_id
     body = make_petfinder_request(petfinder_url)
@@ -147,7 +157,7 @@ def sponsor(cat_id):
     prices = {'baby': 105, 'young': 95, 'adult': 95, 'senior': 95}
     sponsor_amount = prices[body['animal']['age'].lower()]
 
-    cat_ids = sponsor_body.get('cat_ids') if sponsor_body else None
+    cat_ids = sponsor_body if sponsor_body else []
     if len(cat_ids) > 0 and str(cat_ids.pop(0)) == str(cat_id):
         return render_template('already-sponsor.html',
                                cat_id=cat_id,
