@@ -20,7 +20,7 @@
 <div id="available-cats-container" class="container">
     {% if cat['status'] == 'adoptable' %}
         <div class="item-sm navigation-btn">
-            <a href="#" onclick="history.back(-1)"><div class="next-btn">Back</div></a>
+            <a onclick="history.back(-1)"><div class="next-btn">Back</div></a>
         </div>
         <div class="item">
           <a href="{{ cat['url'] }}">
