@@ -1,6 +1,7 @@
 from logging.config import dictConfig
 import json
 import os
+import socket
 
 from html import unescape
 from flask_caching import Cache
@@ -100,14 +101,17 @@ def index():
 
 
 def make_petfinder_request(url):
-    # TODO: make logic fail-safe
-    token_response = requests.post(
-        'https://api.petfinder.com/v2/oauth2/token',
-        headers={'Content-Type': 'application/x-www-form-urlencoded'},
-        data={'grant_type': 'client_credentials',
-              'client_id': CLIENT_ID,
-              'client_secret': CLIENT_SECRET},
-        timeout=(3.05, 3))
+    try:
+        token_response = requests.post(
+            'https://api.petfinder.com/v2/oauth2/token',
+            headers={'Content-Type': 'application/x-www-form-urlencoded'},
+            data={'grant_type': 'client_credentials',
+                  'client_id': CLIENT_ID,
+                  'client_secret': CLIENT_SECRET},
+            timeout=(3.05, 3))
+    except (OSError, socket.error, requests.exceptions.RequestException) as e:
+        app.logger.warning('Error making request to url:%r error:%r', url, e)
+        return
 
     if token_response.status_code != 200:
         app.logger.warning('Error retrieving new token: %r',
@@ -129,15 +133,19 @@ def make_petfinder_request(url):
 
 
 def make_sponsor_request(body):
-    # TODO: make logic fail-safe
     url = BASE_SPONSOR_URL / 'sponsored'
     app.logger.info('Posting to url %s', url)
-    response = requests.post(url,
-                             data=json.dumps(body),
-                             headers={'User-Agent': f'catwidget/{version}',
-                                      'Content-Type': 'application/json',
-                                      'Accept': 'application/json'},
-                             timeout=(6.05, 10))
+    try:
+        response = requests.post(url,
+                                 data=json.dumps(body),
+                                 headers={'User-Agent': f'catwidget/{version}',
+                                          'Content-Type': 'application/json',
+                                          'Accept': 'application/json'},
+                                 timeout=(6.05, 10),
+                                 )
+    except (OSError, socket.error, requests.exceptions.RequestException) as e:
+        app.logger.warning('Error making request to url:%r error:%r', url, e)
+        return
     app.logger.info('Request: %r', response.request.headers)
     if response.status_code != 200:
         app.logger.warning('Error making request to url:%r error:%r',
