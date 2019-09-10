@@ -303,7 +303,7 @@ svg:hover {
   width: 100%;
 }
 
-@media screen and (max-width: 700px) {
+@media all and (max-width: 700px) {
   .item, .item-sm {
     width: 100%;
   }
