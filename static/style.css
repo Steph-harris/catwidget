@@ -241,6 +241,8 @@ svg:hover {
 }
 .item-sm {
   margin: 0 3% 0 0;
+  display: inline;
+  text-align: center;
 }
 .fail {
   color: red;
@@ -283,7 +285,25 @@ svg:hover {
     text-rendering: optimizeLegibility;
     font-family: sans-serif;
 }
+.header-sm {
+    color: #52bad1;
+    line-height: 1.2em;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 35px;
+    letter-spacing: -0.02em;
+    text-transform: none;
+    -webkit-font-smoothing: subpixel-antialiased;
+    text-rendering: optimizeLegibility;
+    font-family: sans-serif;
+}
 .header-container {
   text-align: center;
   width: 100%;
+}
+
+@media all and (max-width: 500px) {
+  .item, .item-sm {
+    width: 100%;
+  }
 }
