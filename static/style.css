@@ -229,17 +229,6 @@ body {
 .thank-you-text {
   margin: 0 0 30px 0;
 }
-svg {
-  color: #52bad1;
-  object-fit: cover;
-  width: 60px;
-  padding-top: 15px;
-}
-
-svg:hover {
-  opacity: 0.8;
-  cursor: pointer;
-}
 .item-sm {
   margin: 0 3% 0 0;
   display: inline;
@@ -303,7 +292,7 @@ svg:hover {
   width: 100%;
 }
 
-@media all and (max-width: 500px) {
+@media all and (max-width: 700px) {
   .item, .item-sm {
     min-width: 100%;
   }
