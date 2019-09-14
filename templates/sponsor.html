@@ -14,77 +14,92 @@
     <link rel="mask-icon" href="{{ url_for('static', filename='favicon.ico', _external=True, _scheme=scheme) }}" color="#5bbad5">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
   <script>
-  paypal.Buttons({
-    createOrder: function (data, actions) {
-      document.getElementById('failure-msg').hidden = true;
-      document.getElementById('processing-msg').hidden = false;
-      document.getElementById('paypal-button-container').style.display = 'none';
-      return actions.order.create({
-          purchase_units: [{
-              amount: {
-                  value: {{ sponsor_amount }}
-              }
-          }]
-      });
-    },
-    onError: function (e) {
-      console.log(e);
-      document.getElementById('failure-msg').hidden = false;
-      document.getElementById('processing-msg').hidden = true;
-      document.getElementById('paypal-button-container').style.display = 'block';
+      let failureMsg = document.getElementById('failure-msg');
+      let procMsg = document.getElementById('processing-msg');
+      let buttons = document.getElementById('paypal-button-container');
+      let thanks = document.getElementById('thank-you');
+      let desc = document.getElementById('item-desc');
 
-    },
-    onCancel: function (e) {
-      document.getElementById('failure-msg').hidden = true;
-      document.getElementById('processing-msg').hidden = true;
-      document.getElementById('paypal-button-container').style.display = 'block';
-
-      // paypal css sets the buttons height to 0px only sometimes on cancel
-      document.getElementById('paypal-button-container').childNodes[0].style.height = '200px';
-    },
-    onClose: function (e) {
-      document.getElementById('failure-msg').hidden = true;
-      document.getElementById('processing-msg').hidden = true;
-      document.getElementById('paypal-button-container').style.display = 'block';
-    },
-    onApprove: function (data, actions) {
-      return actions.order.capture().then(function (details) {
-          // order was declined
-          if (details.error === 'INSTRUMENT_DECLINED') {
-              document.getElementById('failure-msg').hidden = false;
-              document.getElementById('processing-msg').hidden = true;
-              document.getElementById('paypal-button-container').style.display = 'block';
-              return actions.restart();
+      function hide(elem, value) {
+          try {
+              elem.hidden = value;
+          } catch {
+              console.log('cannot hide ' + elem + ' ' + value);
           }
+      }
+
+      paypal.Buttons({
+        createOrder: function (data, actions) {
+          hide(failureMsg, true);
+          hide(procMsg, false);
+          buttons.style.display = 'none';
+          return actions.order.create({
+              purchase_units: [{
+                  amount: {
+                      value: {{ sponsor_amount }}
+                  }
+              }]
+          });
+        },
+        onError: function (e) {
+          console.log(e);
+          hide(failureMsg, false);
+          hide(procMsg, true);
+          buttons.style.display = 'block';
+
+        },
+        onCancel: function (e) {
+          hide(failureMsg, true);
+          hide(procMsg, true);
+          buttons.style.display = 'block';
+
+          // paypal css sets the buttons height to 0px only sometimes on cancel
+          buttons.childNodes[0].style.height = '200px';
+        },
+        onClose: function (e) {
+          hide(failureMsg, true);
+          hide(procMsg, true);
+          buttons.style.display = 'block';
+        },
+        onApprove: function (data, actions) {
+          return actions.order.capture().then(function (details) {
+              // order was declined
+              if (details.error === 'INSTRUMENT_DECLINED') {
+                  hide(failureMsg, false);
+                  hide(procMsg, true);
+                  buttons.style.display = 'block';
+                  return actions.restart();
+              }
 
           // set state to successful even if reporting fails
-          document.getElementById('failure-msg').hidden = true;
-          document.getElementById('processing-msg').hidden = true;
-          document.getElementById('paypal-button-container').style.display = 'none';
-          document.getElementById('item-desc').hidden = true;
-          document.getElementById('thank-you').hidden = false;
+          hide(failureMsg, true);
+          hide(procMsg, true);
+          hide(desc, true);
+          hide(thanks, false);
+          buttons.style.display = 'none';
 
-          // save the transaction
-          return fetch('{{ order_callback_url }}', {
-              method: 'post',
-              headers: {
-                  'content-type': 'application/json'
-              },
-              body: JSON.stringify({
-                  create_time: details.create_time,
-                  sponsor_amount: details.purchase_units["0"].amount.value,
-                  given_name: details.payer.name.given_name + ' ' + details.payer.name.surname,
-                  email: details.payer.email_address,
-                  paypal_order_id: details.id,
-                  petfinder_id: {{ cat['id'] }},
-                  cat_self_link: "{{  cat['url'] }}",
-                  cat_name: "{{ cat['name'].split(' -')[0] | safe}}",
-                  cat_img: "{{ cat['photos'][0]['medium'] }}"
-              })
-          }).catch(e => console.log(e + '; Tracking number: ' + details.id));
-      })
-    }
-  }).render('#paypal-button-container');
+
+              // save the transaction
+              return fetch('{{ order_callback_url }}', {
+                  method: 'post',
+                  headers: {
+                      'content-type': 'application/json'
+                  },
+                  body: JSON.stringify({
+                      create_time: details.create_time,
+                      sponsor_amount: details.purchase_units["0"].amount.value,
+                      given_name: details.payer.name.given_name + ' ' + details.payer.name.surname,
+                      email: details.payer.email_address,
+                      paypal_order_id: details.id,
+                      petfinder_id: {{ cat['id'] }},
+                      cat_self_link: "{{  cat['url'] }}",
+                      cat_name: "{{ cat['name'].split(' -')[0] | safe}}",
+                      cat_img: "{{ cat['photos'][0]['medium'] }}"
+                  })
+              }).catch(e => console.log(e + '; Tracking number: ' + details.id));
+          })
+        }
+      }).render('#paypal-button-container');
   </script>
 </head>
 <body>
