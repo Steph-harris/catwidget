@@ -73,13 +73,12 @@
                   return actions.restart();
               }
 
-          // set state to successful even if reporting fails
-          hide(document.getElementById('failure-msg'), true);
-          hide(document.getElementById('processing-msg'), true);
-          hide(document.getElementById('item-desc'), true);
-          hide(document.getElementById('thank-you'), false);
-          display(document.getElementById('paypal-button-container'), 'block');
-
+              // set state to successful even if reporting fails
+              hide(document.getElementById('failure-msg'), true);
+              hide(document.getElementById('processing-msg'), true);
+              hide(document.getElementById('item-desc'), true);
+              hide(document.getElementById('thank-you'), false);
+              display(document.getElementById('paypal-button-container'), 'none');
 
               // save the transaction
               return fetch('{{ order_callback_url }}', {
