@@ -14,11 +14,11 @@
     <link rel="mask-icon" href="{{ url_for('static', filename='favicon.ico', _external=True, _scheme=scheme) }}" color="#5bbad5">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
   <script>
-      let failureMsg = document.getElementById('failure-msg');
-      let procMsg = document.getElementById('processing-msg');
-      let buttons = document.getElementById('paypal-button-container');
-      let thanks = document.getElementById('thank-you');
-      let desc = document.getElementById('item-desc');
+      const failureMsg = document.getElementById('failure-msg');
+      const procMsg = document.getElementById('processing-msg');
+      const buttons = document.getElementById('paypal-button-container');
+      const thanks = document.getElementById('thank-you');
+      const desc = document.getElementById('item-desc');
 
       function hide(elem, value) {
           try {
