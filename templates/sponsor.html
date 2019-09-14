@@ -14,12 +14,6 @@
     <link rel="mask-icon" href="{{ url_for('static', filename='favicon.ico', _external=True, _scheme=scheme) }}" color="#5bbad5">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
   <script>
-      const failureMsg = document.getElementById('failure-msg');
-      const procMsg = document.getElementById('processing-msg');
-      const buttons = document.getElementById('paypal-button-container');
-      const thanks = document.getElementById('thank-you');
-      const desc = document.getElementById('item-desc');
-
       function hide(elem, value) {
           try {
               elem.hidden = value;
@@ -27,12 +21,19 @@
               console.log('cannot hide ' + elem + ' ' + value);
           }
       }
+      function display(elem, value) {
+          try {
+              elem.style.display = value;
+          } catch {
+              console.log('cannot display ' + elem + ' ' + value);
+          }
+      }
 
       paypal.Buttons({
         createOrder: function (data, actions) {
-          hide(failureMsg, true);
-          hide(procMsg, false);
-          buttons.style.display = 'none';
+          hide(document.getElementById('failure-msg'), true);
+          hide(document.getElementById('processing-msg'), false);
+          display(document.getElementById('paypal-button-container'), 'none');
           return actions.order.create({
               purchase_units: [{
                   amount: {
@@ -43,40 +44,41 @@
         },
         onError: function (e) {
           console.log(e);
-          hide(failureMsg, false);
-          hide(procMsg, true);
-          buttons.style.display = 'block';
-
+          hide(document.getElementById('failure-msg'), false);
+          hide(document.getElementById('processing-msg'), true);
+          display(document.getElementById('paypal-button-container'), 'block');
         },
         onCancel: function (e) {
-          hide(failureMsg, true);
-          hide(procMsg, true);
-          buttons.style.display = 'block';
+          hide(document.getElementById('failure-msg'), true);
+          hide(document.getElementById('processing-msg'), true);
+          display(document.getElementById('paypal-button-container'), 'block');
 
-          // paypal css sets the buttons height to 0px only sometimes on cancel
-          buttons.childNodes[0].style.height = '200px';
+          try {
+              // paypal css sets the buttons height to 0px only sometimes on cancel
+              document.getElementById('paypal-button-container').childNodes[0].style.height = '200px';
+          } catch {}
         },
         onClose: function (e) {
-          hide(failureMsg, true);
-          hide(procMsg, true);
-          buttons.style.display = 'block';
+          hide(document.getElementById('failure-msg'), true);
+          hide(document.getElementById('processing-msg'), true);
+          display(document.getElementById('paypal-button-container'), 'block');
         },
         onApprove: function (data, actions) {
           return actions.order.capture().then(function (details) {
               // order was declined
               if (details.error === 'INSTRUMENT_DECLINED') {
-                  hide(failureMsg, false);
-                  hide(procMsg, true);
-                  buttons.style.display = 'block';
+                  hide(document.getElementById('failure-msg'), false);
+                  hide(document.getElementById('processing-msg'), true);
+                  display(document.getElementById('paypal-button-container'), 'block');
                   return actions.restart();
               }
 
           // set state to successful even if reporting fails
-          hide(failureMsg, true);
-          hide(procMsg, true);
-          hide(desc, true);
-          hide(thanks, false);
-          buttons.style.display = 'none';
+          hide(document.getElementById('failure-msg'), true);
+          hide(document.getElementById('processing-msg'), true);
+          hide(document.getElementById('item-desc'), true);
+          hide(document.getElementById('thank-you'), false);
+          display(document.getElementById('paypal-button-container'), 'block');
 
 
               // save the transaction
