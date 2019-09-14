@@ -28,6 +28,7 @@
       });
     },
     onError: function (e) {
+      console.log(e);
       document.getElementById('failure-msg').hidden = false;
       document.getElementById('processing-msg').hidden = true;
       document.getElementById('paypal-button-container').style.display = 'block';
