@@ -33,7 +33,6 @@
         createOrder: function (data, actions) {
           hide(document.getElementById('failure-msg'), true);
           hide(document.getElementById('processing-msg'), false);
-          display(document.getElementById('paypal-button-container'), 'none');
           return actions.order.create({
               purchase_units: [{
                   amount: {
