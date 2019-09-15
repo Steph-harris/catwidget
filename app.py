@@ -12,7 +12,7 @@ import requests
 import yarl
 
 
-version = '1.0.0'
+version = '1.0.1'
 app = Flask(__name__)
 dictConfig({
     'version': 1,
