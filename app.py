@@ -9,6 +9,8 @@ from flask import Flask
 from flask_cors import CORS, cross_origin
 from flask import render_template, request, url_for
 import requests
+import sentry_sdk
+from sentry_sdk.integrations.flask import FlaskIntegration
 import yarl
 
 
@@ -35,6 +37,12 @@ app.config.from_mapping({
     "CACHE_DEFAULT_TIMEOUT": 300,
     "PREFERRED_URL_SCHEME": "https"
 })
+SENTRY_DSN = os.environ.get('SENTRY_DSN')
+if SENTRY_DSN:
+    sentry_sdk.init(
+        dsn=SENTRY_DSN,
+        integrations=[FlaskIntegration()]
+    )
 TRUSTED_ORIGINS = os.environ.get(
     'TRUSTED_ORIGINS', 'localhost 127.0.0.1')
 CORS(app, resources={r"/": {"origins": TRUSTED_ORIGINS},

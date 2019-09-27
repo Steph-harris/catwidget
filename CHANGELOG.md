@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.0.3
+-----
+- Add sentry
+
 1.0.2
 -----
 - Fix when no photos exist
