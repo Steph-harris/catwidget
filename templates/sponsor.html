@@ -93,7 +93,11 @@
                       petfinder_id: {{ cat['id'] }},
                       cat_self_link: "{{  cat['url'] }}",
                       cat_name: "{{ cat['name'].split(' -')[0] | safe}}",
+                      {% if cat['photos'] %}
                       cat_img: "{{ cat['photos'][0]['medium'] }}"
+                      {% else %}
+                      cat_img: "{{ url_for('static', filename='cat-solid.svg', _external=True, _scheme=scheme) }}"
+                      {% endif %}
                   })
               }).catch(e => console.log(e + '; Tracking number: ' + details.id));
           })
@@ -114,7 +118,11 @@
           <a href="{{ cat['url'] }}">
           <div class="item-contents">
             <div class="item-image">
-              <img src="{{ cat['photos'][0]['medium'] }}">
+                {% if cat['photos'] %}
+                  <img src="{{ cat['photos'][0]['medium'] }}">
+                {% else %}
+                  <img class="icon" src="{{ url_for('static', filename='cat-solid.svg', _external=True, _scheme=scheme) }}">
+                {% endif %}
             </div>
             <div class="item-content-container">
                 <div class="item-name">

@@ -25,7 +25,11 @@
                   <a href="{{ cat['url'] }}" target="_blank">
                   <div class="item-contents">
                     <div class="item-image">
-                      <img src="{{ cat['photos'][0]['medium'] }}">
+                        {% if cat['photos'] %}
+                          <img src="{{ cat['photos'][0]['medium'] }}">
+                        {% else %}
+                          <img class="icon" src="{{ url_for('static', filename='cat-solid.svg', _external=True, _scheme=scheme) }}">
+                        {% endif %}
                     </div>
                     <div class="item-content-container">
                         <div class="item-name">
