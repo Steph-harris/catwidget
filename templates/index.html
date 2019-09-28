@@ -82,6 +82,9 @@
           {%  if next_link %}
             <a href="{{ next_link }}"><div id="available-cats-next" class="next-btn">Next</div></a>
           {% endif %}
+          {% if prev_link or next_link %}
+            <a href="#"><div id="available-cats-top" class="next-btn">Top ↑</div></a>
+          {% endif %}
         </div>
     </div>
   </body>

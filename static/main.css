@@ -154,7 +154,8 @@ body {
   margin: .618em .51em;
 }
 .next-btn:hover {
-
+  background-color: #52bad1;
+  color: white;
 }
 .next-btn-inverse {
   background-color: #52bad1;
