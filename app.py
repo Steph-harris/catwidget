@@ -14,7 +14,7 @@ from sentry_sdk.integrations.flask import FlaskIntegration
 import yarl
 
 
-version = '1.0.1'
+version = '1.0.4'
 app = Flask(__name__)
 dictConfig({
     'version': 1,
