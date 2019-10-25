@@ -192,6 +192,8 @@ def sponsor(cat_id):
         cat_id=cat_id,
         cat=animal,
         scheme=SCHEME,
+        order_intent_url=os.environ.get('ORDER_INTENT_URL',
+                                        'http://localhost/intent'),
         order_callback_url=os.environ.get('ORDER_CALLBACK_URL',
                                           'http://localhost/sponsor'),
         sponsor_amount=sponsor_amount,

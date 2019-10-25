@@ -28,16 +28,48 @@
               console.log('cannot display ' + elem + ' ' + value);
           }
       }
+      function uuidv4() {
+          return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+            (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+          );
+      }
+      const intentID = uuidv4();
 
       paypal.Buttons({
         createOrder: function (data, actions) {
           hide(document.getElementById('failure-msg'), true);
           hide(document.getElementById('processing-msg'), false);
+
+          // create an intent
+          fetch('{{ order_intent_url }}', {
+                  method: 'post',
+                  headers: {
+                      'Content-Type': 'application/json',
+                      'X-Intent-ID': intentID,
+                      'User-Agent': 'catwidget'
+                  },
+                  body: JSON.stringify({
+                      create_time: Date.now(),
+                      sponsor_amount: {{ sponsor_amount }},
+                      intent_id: intentID,
+                      petfinder_id: {{ cat['id'] }},
+                      cat_self_link: "{{  cat['url'] }}",
+                      cat_name: "{{ cat['name'].split(' -')[0] | safe}}",
+                      {% if cat['photos'] %}
+                      cat_img: "{{ cat['photos'][0]['medium'] }}"
+                      {% else %}
+                      cat_img: "{{ url_for('static', filename='cat-solid.svg', _external=True, _scheme=scheme) }}"
+                      {% endif %}
+                  })
+              }).catch(e => console.log(e + '; Failed to record intent_id: ' + intentID));
+
+          // create the order
           return actions.order.create({
               purchase_units: [{
                   amount: {
                       value: {{ sponsor_amount }}
-                  }
+                  },
+                  description: "sponsor cat intent_id: " + uuidv4()
               }]
           });
         },
@@ -90,6 +122,7 @@
                       given_name: details.payer.name.given_name + ' ' + details.payer.name.surname,
                       email: details.payer.email_address,
                       paypal_order_id: details.id,
+                      intent_id: intentID,
                       petfinder_id: {{ cat['id'] }},
                       cat_self_link: "{{  cat['url'] }}",
                       cat_name: "{{ cat['name'].split(' -')[0] | safe}}",

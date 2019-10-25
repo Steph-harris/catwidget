@@ -1,5 +1,8 @@
 Changelog
 =========
+1.0.4
+-----
+- Add intents to paypal orders
 
 1.0.3
 -----
