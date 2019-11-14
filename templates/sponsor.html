@@ -103,13 +103,6 @@
                   return actions.restart();
               }
 
-              // set state to successful even if reporting fails
-              hide(document.getElementById('failure-msg'), true);
-              hide(document.getElementById('processing-msg'), true);
-              hide(document.getElementById('item-desc'), true);
-              hide(document.getElementById('thank-you'), false);
-              display(document.getElementById('paypal-button-container'), 'none');
-
               // save the transaction
               return fetch('{{ order_callback_url }}', {
                   method: 'post',
@@ -132,7 +125,16 @@
                       cat_img: "{{ url_for('static', filename='cat-solid.svg', _external=True, _scheme=scheme) }}"
                       {% endif %}
                   })
-              }).catch(e => console.log(e + '; Tracking number: ' + details.id));
+              }).catch(function(e) {
+                  console.log(e + '; Tracking number: ' + details.id);
+              }).finally(function() {
+                  // set state to successful even if reporting fails
+                  hide(document.getElementById('failure-msg'), true);
+                  hide(document.getElementById('processing-msg'), true);
+                  hide(document.getElementById('item-desc'), true);
+                  hide(document.getElementById('thank-you'), false);
+                  display(document.getElementById('paypal-button-container'), 'none');
+              });
           })
         }
       }).render('#paypal-button-container');

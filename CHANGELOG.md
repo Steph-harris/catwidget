@@ -1,5 +1,9 @@
 Changelog
 =========
+1.0.5
+-----
+- Don't show success until after recording is finished
+
 1.0.4
 -----
 - Add intents to paypal orders
