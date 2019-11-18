@@ -1,5 +1,11 @@
 Changelog
 =========
+
+1.0.6
+-----
+- Remove processing message
+- Use custom_id and add cat name to description
+
 1.0.5
 -----
 - Don't show success until after recording is finished

@@ -69,7 +69,7 @@
                       value: {{ sponsor_amount }}
                   },
                   custom_id: intentID,
-                  description: "sponsorcat cat_id: {{ cat['id'] }} cat_name: {{ cat['name'].split(' -')[0] | safe}}"
+                  description: "sponsorcat cat_id:{{ cat['id'] }} cat_name:{{ cat['name'].split(' -')[0] | safe}} intent_id:" +intentID
               }]
           });
         },
