@@ -38,7 +38,6 @@
       paypal.Buttons({
         createOrder: function (data, actions) {
           hide(document.getElementById('failure-msg'), true);
-          hide(document.getElementById('processing-msg'), false);
 
           // create an intent
           fetch('{{ order_intent_url }}', {
@@ -75,12 +74,10 @@
         },
         onError: function (e) {
           hide(document.getElementById('failure-msg'), false);
-          hide(document.getElementById('processing-msg'), true);
           display(document.getElementById('paypal-button-container'), 'block');
         },
         onCancel: function (e) {
           hide(document.getElementById('failure-msg'), true);
-          hide(document.getElementById('processing-msg'), true);
           display(document.getElementById('paypal-button-container'), 'block');
 
           try {
@@ -90,7 +87,6 @@
         },
         onClose: function (e) {
           hide(document.getElementById('failure-msg'), true);
-          hide(document.getElementById('processing-msg'), true);
           display(document.getElementById('paypal-button-container'), 'block');
         },
         onApprove: function (data, actions) {
@@ -98,7 +94,6 @@
               // order was declined
               if (details.error === 'INSTRUMENT_DECLINED') {
                   hide(document.getElementById('failure-msg'), false);
-                  hide(document.getElementById('processing-msg'), true);
                   display(document.getElementById('paypal-button-container'), 'block');
                   return actions.restart();
               }
@@ -130,7 +125,6 @@
               }).finally(function() {
                   // set state to successful even if reporting fails
                   hide(document.getElementById('failure-msg'), true);
-                  hide(document.getElementById('processing-msg'), true);
                   hide(document.getElementById('item-desc'), true);
                   hide(document.getElementById('thank-you'), false);
                   display(document.getElementById('paypal-button-container'), 'none');
@@ -206,7 +200,6 @@
               </div>
           </div>
           <div id="failure-msg" class="fail" hidden><h5>Oops! Failed to process your payment. Please try again.</h5></div>
-          <div id="processing-msg" hidden><div class="loading"></div></div>
         <div id="paypal-button-container"></div>
       </div>
     </div>
