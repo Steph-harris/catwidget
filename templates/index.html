@@ -21,32 +21,26 @@
         </a>
       {% else %}
 <div class="filter-bar row">
-            <form class="form-inline">
-              <div class="col-md-3"><h6>Filter By</h6></div>
-<div class="col-md-3">
-<div class="row">
-                            <label for="cat-gender">Gender</label><select class="form-control" id="cat-gender">
+                <form class="form-inline">
+  <label class="my-1 mr-2" for="cat-gender">Gender</label>
+      <select class="custom-select my-1 mr-sm-2" id="cat-gender">
                               <option>All</option>
                               <option>Female</option>
                               <option>Male</option>
                             </select>
-</div></div>
 
-                  <div class="filter-item col-md-3">
-                <div class="row">
-                    <label for="cat-age">Age</label><select class="form-control" id="cat-gender">
+                    <label class="my-1 mr-2" for="cat-age">Age</label>
+                    <select class="custom-select my-1 mr-sm-2" id="cat-age">
                                                             <option>All</option>
 <option>Baby</option>
                               <option>Young</option>
                               <option>Adult</option>
                               <option>Senior</option>
                             </select>
-</div></div>
-                                  <div class="filter-item col-md-3">
 
-                <a href="#"><div id="filter-submit" class="next-btn">Apply</div></a>
-                                  </div>
-            </form>
+  <button type="submit" class="my-1 next-btn">Apply</button>
+</form>
+
           </div>
           <div class="row">
           {% for cat in animals %}

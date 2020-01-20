@@ -201,19 +201,19 @@ body {
 .navigation-btn {
   display: flex;
 }
-.filter-bar, .filter-bar form, .filter-bar .row {
-  /*width: 100%;*/
-}
-.form-inline {
-  display: flex;
-  align-items: center;
-}
-.filter-bar h6 {
-  margin: 0;
-}
-.filter-bar select {
-  /*min-width: 70%;*/
-}
+/*.filter-bar, .filter-bar form, .filter-bar .row {*/
+  /*!*width: 100%;*!*/
+/*}*/
+/*.form-inline {*/
+  /*display: flex;*/
+  /*align-items: center;*/
+/*}*/
+/*.filter-bar h6 {*/
+  /*margin: 0;*/
+/*}*/
+/*.filter-bar select {*/
+  /*!*min-width: 70%;*!*/
+/*}*/
 
 @media all and (max-width: 500px) {
   .item {
