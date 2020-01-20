@@ -7,6 +7,7 @@
   <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.ico', _external=True, _scheme=scheme) }}" sizes="16x16">
   <link rel="mask-icon" href="{{ url_for('static', filename='favicon.ico', _external=True, _scheme=scheme) }}" color="#5bbad5">
   <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <meta name="theme-color" content="#ffffff">
 </head>
   <body>
@@ -19,6 +20,35 @@
           <div class="btn small-button-style-raised sqs-block-button sqs-block-button-element--small">View all Adoptable Kitties</div>
         </a>
       {% else %}
+<div class="filter-bar row">
+            <form class="form-inline">
+              <div class="col-md-3"><h6>Filter By</h6></div>
+<div class="col-md-3">
+<div class="row">
+                            <label for="cat-gender">Gender</label><select class="form-control" id="cat-gender">
+                              <option>All</option>
+                              <option>Female</option>
+                              <option>Male</option>
+                            </select>
+</div></div>
+
+                  <div class="filter-item col-md-3">
+                <div class="row">
+                    <label for="cat-age">Age</label><select class="form-control" id="cat-gender">
+                                                            <option>All</option>
+<option>Baby</option>
+                              <option>Young</option>
+                              <option>Adult</option>
+                              <option>Senior</option>
+                            </select>
+</div></div>
+                                  <div class="filter-item col-md-3">
+
+                <a href="#"><div id="filter-submit" class="next-btn">Apply</div></a>
+                                  </div>
+            </form>
+          </div>
+          <div class="row">
           {% for cat in animals %}
             {% if cat['status'] == 'adoptable' %}
                 <div class="item">
@@ -84,6 +114,7 @@
             <a href="#"><div id="available-cats-top" class="next-btn">Top ↑</div></a>
           {% endif %}
         </div>
+    </div>
     </div>
   </body>
 <script>

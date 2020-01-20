@@ -55,8 +55,8 @@ BASE_PETFINDER_URL = yarl.URL(
     {'organization': 'PA16', 'status': 'adoptable'})
 BASE_SPONSOR_URL = yarl.URL(
     os.environ.get('BASE_SPONSOR_URL', 'https://sponsor-cat.herokuapp.com'))
-CLIENT_ID = os.environ['CLIENT_ID']
-CLIENT_SECRET = os.environ['CLIENT_SECRET']
+CLIENT_ID = os.environ['PETFINDER_CLIENT_ID']
+CLIENT_SECRET = os.environ['PETFINDER_CLIENT_SECRET']
 PAYPAL_CLIENT_ID = os.environ['PAYPAL_CLIENT_ID']
 SCHEME = os.environ.get('SCHEME', 'https')
 
@@ -123,14 +123,17 @@ def make_petfinder_request(url):
         return
     else:
         token = token_response.json()['access_token']
+        app.logger.info('token %s', token)
         app.logger.info('Getting url %s', url)
         response = requests.get(url,
                                 headers={'Authorization': f'Bearer {token}'},
                                 timeout=(3.05, 3))
-        if response.status_code != 200:
-            app.logger.warning('Error making request to url:%r error:%r',
+        if not response.ok:
+            app.logger.warning('Error making request to url:%r '
+                               'code:%r error:%r',
                                url,
-                               token_response.content)
+                               response.status_code,
+                               response.content)
             return
     app.logger.debug(response.json())
     return response.json()
