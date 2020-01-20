@@ -89,10 +89,7 @@ def index():
     prv = pagination.get('previous', {}).get('href', '')
     nxt = pagination.get('next', {}).get('href', '')
 
-    show_sponsor = request.args.get('sponsor', None)
     kwargs = {'_external': True, '_scheme': SCHEME}
-    if show_sponsor:
-        kwargs['sponsor'] = show_sponsor
     prev_link = url_for(
         'index', page=prv, **kwargs) if prv else None
     next_link = url_for(
@@ -102,7 +99,6 @@ def index():
     return render_template('index.html',
                            animals=animals,
                            scheme=SCHEME,
-                           sponsor_on=show_sponsor,
                            next_link=next_link,
                            prev_link=prev_link,
                            header=header)
