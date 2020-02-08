@@ -15,7 +15,7 @@
 </head>
 <body>
 {% if header %}
-    <div class="header-container"><h2 class="header">Sponsor {{ cat['name'].split(' -')[0] | safe}}!</h2></div>
+    <div class="header-container"><h2 class="header">Sponsor {{ cat['name'].split(' -')[0] | safe}}'s Care!</h2></div>
 {% endif %}
 <div id="available-cats-container" class="container">
     {% if cat['status'] == 'adoptable' %}
@@ -64,9 +64,9 @@
     <div class="item">
       <div id="payment-item">
         <div class="item-desc">
-            <h3>Adoption Fee Paid!</h3>
+            <h3>My care is already sponsored!</h3>
             <div>
-                <h6>My adoption fee has already been paid! Please consider sponsoring another furry cat by clicking the back button!</h6>
+                <h6>My care has already been sponsored! Please consider sponsoring another furry cat by clicking the back button!</h6>
             </div>
         </div>
       </div>

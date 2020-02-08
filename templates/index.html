@@ -58,12 +58,12 @@
                                 {% if not cat.get('is_sponsored') %}
                                     <div class="btn-container">
                                           <a href="{{ url_for("sponsor", **{'cat_id': cat['id'], 'header': 'on'}) }}">
-                                            <div class="next-btn-inverse">Sponsor Me!</div>
+                                            <div class="next-btn-inverse">Sponsor My Spay/Neuter!</div>
                                           </a>
                                     </div>
                                 {% else %}
                                     <div class="btn-container">
-                                        <div class="next-btn">Adoption Fee Paid</div>
+                                        <div class="next-btn">My Care Is Sponsored</div>
                                     </div>
                                 {% endif %}
                             {% endif %}
