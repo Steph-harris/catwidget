@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.0.7
+-----
+- Update button wording for seadragon
+- Normalize cat names and unescape descriptions
+
 1.0.6
 -----
 - Remove processing message
