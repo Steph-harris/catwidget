@@ -177,16 +177,16 @@ def sponsor(cat_id):
     sponsor_amount = prices[body['animal']['age'].lower()]
     cat_ids = sponsor_body if sponsor_body else []
     header = request.args.get('header', False)
+    animal = {k: unescape(str(v))
+              if k in ('name', 'description') else v
+              for k, v in body['animal'].items()}
 
     if len(cat_ids) > 0 and str(cat_ids.pop(0)) == str(cat_id):
         return render_template('already-sponsor.html',
                                cat_id=cat_id,
-                               cat=body['animal'],
+                               cat=animal,
                                scheme=SCHEME,
                                header=header)
-    animal = {k: unescape(str(v))
-              if k in ('name', 'description') else v
-              for k, v in body['animal'].items()}
     return render_template(
         'sponsor.html',
         cat_id=cat_id,
